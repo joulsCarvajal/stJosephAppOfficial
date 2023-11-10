@@ -25,17 +25,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             StjosephappofficialTheme {
-                /*val screenSplash = installSplashScreen().setKeepOnScreenCondition{}*/
                 AppNavigation()
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    StjosephappofficialTheme {
-
     }
 }
