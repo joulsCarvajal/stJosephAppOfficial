@@ -233,8 +233,9 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         Spacer(modifier = Modifier.padding(4.dp))
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .height(200.dp)
                 .background(backgroundColor)
+                .verticalScroll(rememberScrollState())
 
         ) {
             Row(
