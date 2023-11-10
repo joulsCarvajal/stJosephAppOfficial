@@ -97,7 +97,7 @@ fun MainScreen(navController: NavController, context: Context) {
         Spacer(modifier = Modifier.height(8.dp))
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .height(400.dp)
                 .background(backColor)
                 .padding(4.dp)
                 .verticalScroll(rememberScrollState())
