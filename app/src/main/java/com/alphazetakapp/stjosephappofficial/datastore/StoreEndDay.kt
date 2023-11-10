@@ -15,20 +15,23 @@ class StoreEndDay(private val context: Context) {
         private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
     }
 
-    fun getMeditationDayState(dayNum: Int): Flow<Boolean> {
-        return context.dataStore.data
-            .map { preferences ->
-                preferences[getMeditationDayKey(dayNum)] ?: false
-            }
-    }
+    // Crea una función para obtener la clave única para cada día
+    private fun switchStateKeyForDay(day: Int) =
+        booleanPreferencesKey("switch_state_$day")
 
-    suspend fun saveMeditationDayState(dayNum: Int, isSelected: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[getMeditationDayKey(dayNum)] = isSelected
+    // Crea una función para obtener el estado del Switch para un día específico
+    fun getSwitchStateForDay(day: Int): Flow<Boolean> {
+        val switchStateKey = switchStateKeyForDay(day)
+        return context.dataStore.data.map { preferences ->
+            preferences[switchStateKey] ?: false
         }
     }
 
-    private fun getMeditationDayKey(dayNum: Int): Preferences.Key<Boolean> {
-        return booleanPreferencesKey("meditation_day_state_$dayNum")
+    // Crea una función para guardar el estado del Switch para un día específico
+    suspend fun saveSwitchStateForDay(day: Int, isOn: Boolean) {
+        val switchStateKey = switchStateKeyForDay(day)
+        context.dataStore.edit { preferences ->
+            preferences[switchStateKey] = isOn
+        }
     }
 }

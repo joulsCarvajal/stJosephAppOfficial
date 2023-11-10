@@ -59,17 +59,9 @@ fun DaysScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        /*MeditationCardView(navController, dataStore = dataStore)*/
         val backColor = colorResource(id = R.color.backgroundColorApp)
         val selectedDayNum = remember { mutableStateOf(0) }
         var isSelected by remember { mutableStateOf(false) }
-
-        LaunchedEffect(isSelected) {
-            val initialSelected = dataStore.getMeditationDayState(selectedDayNum.value).first()
-            isSelected = initialSelected
-        }
-        Log.d("MeditationCardView", "isSelected: $isSelected") // Agrega una impresión de registro
-
 
         LazyColumn {
             items(getMeditationDays()) { meditationday ->
@@ -86,11 +78,7 @@ fun DaysScreen(navController: NavController) {
                                 )
                             )
                         },
-                    border = if (isSelected) {
-                        BorderStroke(2.dp, Color.Gray)
-                    } else {
-                        BorderStroke(2.dp, Color.LightGray)
-                    },
+                    border = BorderStroke(2.dp, Color.Gray),
                     colors = CardDefaults.cardColors(if (isSelected) Color.Gray else backColor)
                 ) {
                     Row(
@@ -99,19 +87,6 @@ fun DaysScreen(navController: NavController) {
                             .background(backColor),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Checkbox(
-                            checked = isSelected,
-                            onCheckedChange = { isChecked ->
-                                Log.d("MeditationCardView", "Switch isChecked: $isChecked")
-                                runBlocking {
-                                    dataStore.saveMeditationDayState(
-                                        meditationday.dayNum,
-                                        isChecked
-                                    )
-                                }
-                            },
-                            modifier = Modifier.padding(8.dp)
-                        )
                         Image(
                             painter = painterResource(id = meditationday.photo),
                             contentDescription = "Image",
@@ -134,12 +109,12 @@ fun DaysScreen(navController: NavController) {
                             Spacer(modifier = Modifier.size(4.dp))
                             Text(
                                 text = meditationday.meditationDay,
-                                fontSize = 12.sp,
+                                fontSize = 14.sp,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(end = 18.dp)
-                                    .padding(bottom = 4.dp),
+                                    .padding(bottom = 8.dp),
                                 color = Color.White
                             )
                         }
