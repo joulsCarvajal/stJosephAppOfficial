@@ -58,7 +58,7 @@ fun PrepMeditation(navController: NavController) {
                 textAlign = TextAlign.Center
             )
         }
-        Spacer(modifier = Modifier.size(8.dp))
+        Spacer(modifier = Modifier.size(16.dp))
         Row(modifier = Modifier.align(Alignment.End)) {
             Button(
                 onClick = { navController.navigate(Routes.DaysScreen.routes)},

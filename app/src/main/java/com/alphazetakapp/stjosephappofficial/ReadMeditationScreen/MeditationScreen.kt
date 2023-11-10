@@ -19,15 +19,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -37,15 +41,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alphazetakapp.stjosephappofficial.R
+import com.alphazetakapp.stjosephappofficial.datastore.StoreEndDay
 import com.alphazetakapp.stjosephappofficial.model.MeditationDay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlin.math.max
 
 @RequiresApi(Build.VERSION_CODES.M)
@@ -115,6 +126,18 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         MeditationDay(30, meditationText)
     )
 
+    val context = LocalContext.current
+    val dataStore = StoreEndDay(context)
+
+    var isSwitchOn by remember {
+        mutableStateOf(runBlocking {
+            dataStore.getSwitchStateForDay(dayNum)
+                .first() // Usa .first() para obtener el valor inicial
+        })
+    }
+    // Define el color de fondo de toda la pantalla
+    val backgroundColor = if (isSwitchOn) Color(0xFFF2A71B) else Color.Transparent
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -132,7 +155,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 10.dp),
-                border = BorderStroke(0.4.dp, color = Color.LightGray),
+                border = BorderStroke(0.4.dp, color = Color.Transparent),
                 elevation = CardDefaults.cardElevation(5.dp)
             ) {
                 Row(
@@ -160,7 +183,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(contrastColor)
+                .background(color = Color.Transparent)
                 .padding(4.dp)
                 .height(20.dp), contentAlignment = Alignment.TopStart
         ) {
@@ -175,7 +198,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(contrastColor)
+                .background(color = Color.Transparent)
                 .padding(4.dp)
                 .height(20.dp), contentAlignment = Alignment.TopStart
         ) {
@@ -187,7 +210,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(contrastColor)
+                .background(color = Color.Transparent)
                 .padding(4.dp)
                 .height(20.dp), contentAlignment = Alignment.TopStart
         ) {
@@ -201,12 +224,44 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(contrastColor)
+                .background(color = Color.Transparent)
                 .padding(4.dp)
                 .height(20.dp), contentAlignment = Alignment.TopStart
         ) {
             PlayAudioFinalPray(context = context)
         }
+        Spacer(modifier = Modifier.padding(4.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(backgroundColor)
+
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Switch(
+                    checked = isSwitchOn,
+                    onCheckedChange = { isChecked ->
+                        isSwitchOn = isChecked
+                        runBlocking {
+                            dataStore.saveSwitchStateForDay(dayNum, isChecked)
+                        }
+                    }
+                )
+                Spacer(modifier = Modifier.width(16.dp)) // Espacio entre el Switch y el Text
+                Text(
+                    text = if (isSwitchOn) "DIA $dayNum, TERMINADO!!!" else "MARCA EL DIA $dayNum COMO TERMINADO",
+                    color = Color.White,
+                    fontStyle = FontStyle.Italic,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+
     }
 }
 
@@ -238,10 +293,10 @@ fun PlayAudioRosary(context: Context) {
                     if (isPlaying) {
                         mp?.pause()
                         isPlaying = false
-//                        meditationScreenViewModel.onMeditationChanged(isPlaying = false)
                     } else {
                         mp?.let {
                             it.playbackParams = it.playbackParams.setSpeed(playbackSpeed)
+                            it.start()
                         }
                         /*meditationScreenViewModel.onMeditationChanged(isPlaying = true)*/
                         isPlaying = true
@@ -651,12 +706,14 @@ fun ExpandableTextRosary(rosary: String) {
                     .height(50.dp)
             )
 
-    Box(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.LightGray)
+            .background(Color.Transparent)
             .padding(8.dp)
-            .then(heightModifier)
+            .then(heightModifier),
+        elevation = CardDefaults.cardElevation(),
+        shape = CardDefaults.elevatedShape
     ) {
         Column(
             modifier = Modifier
@@ -706,12 +763,14 @@ fun ExpandableTextLitanies(litanies: String) {
                     .height(50.dp)
             )
 
-    Box(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.LightGray)
+            .background(Color.Transparent)
             .padding(8.dp)
-            .then(heightModifier)
+            .then(heightModifier),
+        elevation = CardDefaults.cardElevation(),
+        shape = CardDefaults.elevatedShape
     ) {
         Column(
             modifier = Modifier
@@ -762,12 +821,14 @@ fun Meditation(meditationDays: List<MeditationDay>, initialDayNumber: Int) {
                     .height(50.dp)
             )
 
-    Box(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.LightGray)
+            .background(Color.Transparent)
             .padding(8.dp)
-            .then(heightModifier)
+            .then(heightModifier),
+        elevation = CardDefaults.cardElevation(),
+        shape = CardDefaults.elevatedShape
     ) {
         Column(
             modifier = Modifier
@@ -818,12 +879,14 @@ fun FinalPray(finalPray: String) {
                     .height(50.dp)
             )
 
-    Box(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.LightGray)
+            .background(Color.Transparent)
             .padding(8.dp)
-            .then(heightModifier)
+            .then(heightModifier),
+        elevation = CardDefaults.cardElevation(),
+        shape = CardDefaults.elevatedShape
     ) {
         Column(
             modifier = Modifier
