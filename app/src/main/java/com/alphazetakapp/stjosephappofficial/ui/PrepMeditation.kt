@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,11 +32,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.alphazetakapp.stjosephappofficial.R
 import com.alphazetakapp.stjosephappofficial.navigation.Routes
+import com.google.android.gms.ads.MobileAds
 
 @Composable
 fun PrepMeditation(navController: NavController) {
     val backColor = colorResource(id = R.color.backgroundColorApp)
-    val contrastColor = colorResource(id = R.color.contrastColorApp)
+    val context = LocalContext.current
+
+    MobileAds.initialize(context)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -44,6 +49,10 @@ fun PrepMeditation(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        BannerApp(
+            adId = "ca-app-pub-3940256099942544/6300978111"
+        )
+        Spacer(modifier = Modifier.size(8.dp))
         Box(
             modifier = Modifier
                 .fillMaxWidth()

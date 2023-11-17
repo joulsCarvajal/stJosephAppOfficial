@@ -132,184 +132,190 @@ fun getMeditationDays(): List<MeditationCardDay> {
             1,
             "Dia 1",
             "APROVECHA ESTE DÍA PARA QUE ENTREGUES A JESÚS TUS CARGAS, TUS PROBLEMAS Y TUS ENFERMEDADES",
-            R.drawable.day1, R.raw.listenmed1, false
+            R.drawable.day1, R.raw.listenmed1
         ),
         MeditationCardDay(
             2,
             "Dia 2",
             "EN ESTE DÍA ENTRÉGAME TUS AFLICCIONES, QUIERO SER CONSUELO EN TUS PENAS",
-            R.drawable.day2, R.raw.listenmed2, false
+            R.drawable.day2, R.raw.listenmed2
         ),
         MeditationCardDay(
             3,
             "Dia 3",
             "EN ESTE DÍA QUIERO DECIRTE QUE EN MI CARPINTERÍA SIEMPRE ENCONTRARÁS LA PAZ",
-            R.drawable.day3, R.raw.listenmed3, false
+            R.drawable.day3, R.raw.listenmed3
         ),
         MeditationCardDay(
             4,
             "Dia 4",
             "EN ESTE DÍA ENTRÉGAME TUS AFLICCIONES, ALGO HARE POR TI",
-            R.drawable.day4, R.raw.listenmed4, false
+            R.drawable.day4, R.raw.listenmed4
         ),
         MeditationCardDay(
             5,
             "Dia 5",
             "EN ESTE DÍA ENTRÉGAME TUS DIFICULTADES",
             R.drawable.day5,
-            R.raw.listenmed5, false
+            R.raw.listenmed5
         ),
         MeditationCardDay(
             6,
             "Dia 6",
             "EN ESTE DÍA ENTRÉGAME TODAS LAS SITUACIONES QUE TE INTRAQUILIZAN",
-            R.drawable.day6, R.raw.listenmed6, false
+            R.drawable.day6, R.raw.listenmed6
         ),
         MeditationCardDay(
             7,
             "Dia 7",
             "EN ESTE DÍA ENTRÉGAME DE NUEVO LAS INTENCIONES DE TU CORAZÓN",
-            R.drawable.day7, R.raw.listenmed7, false
+            R.drawable.day7, R.raw.listenmed7
         ),
         MeditationCardDay(
             8,
             "Dia 8",
             "ESPERO QUE EN ESTE DÍA SIENTAS TU CARGA MÁS LIVIANA",
-            R.drawable.day8, R.raw.listenmed8, false
+            R.drawable.day8, R.raw.listenmed8
         ),
         MeditationCardDay(
             9,
             "Dia 9",
             "EN ESTE DÍA HAS VENIDO A MI TALLER CON LA ILUSIÓN DE ENCONTRAR UNA SALIDA RÁPIDA A TUS PROBLEMAS",
-            R.drawable.day9, R.raw.listenmed9, false
+            R.drawable.day9, R.raw.listenmed9
         ),
         MeditationCardDay(
             10,
             "Dia 10",
             "EN ESTE DÍA QUIERO QUE MIS PALABRAS TE SIRVAN COMO ANTÍDOTO A TODOS TUS MALES",
-            R.drawable.day10, R.raw.listenmed10, false
+            R.drawable.day10, R.raw.listenmed10
         ),
         MeditationCardDay(
             11,
             "Dia 11",
             "CADA VEZ QUE VENGAS A MI CARPINTERÍA TE HARÉ VIVIR EXPERIENCIAS MARAVILLOSAS",
-            R.drawable.day11, R.raw.listenmed11, false
+            R.drawable.day11, R.raw.listenmed11
         ),
         MeditationCardDay(
             12,
             "Dia 12",
             "HOY TE LLAMO A PONER TU CONFIANZA SOLO EN DIOS",
-            R.drawable.day12, R.raw.listenmed12, false
+            R.drawable.day12, R.raw.listenmed12
         ),
         MeditationCardDay(
             13,
             "Dia 13",
             "NO DUDES EN VENIR A MI HUMILDE CARPINTERÍA",
-            R.drawable.day13, R.raw.listenmed13, false
+            R.drawable.day13, R.raw.listenmed13
         ),
         MeditationCardDay(
             14,
             "Dia 14",
             "¿QUE FAVOR ESPERAS A TRAVÉS DE MI INTERCESIÓN",
-            R.drawable.day14, R.raw.listenmed14, false
+            R.drawable.day14, R.raw.listenmed14
         ),
         MeditationCardDay(
             15,
             "Dia 15",
             "ESPERO QUE CADA DÍA SIENTAS MÁS LA NECESIDAD DE ENCONTRARTE CONMIGO EN MI CARPINTERÍA",
-            R.drawable.day15, R.raw.listenmed15, false
+            R.drawable.day15, R.raw.listenmed15
         ),
         MeditationCardDay(
             16,
             "Dia 16",
             "EN ESTE DÍA PROPONTE VENCERTE A TI MISMO",
-            R.drawable.day16, R.raw.listenmed16, false
+            R.drawable.day16, R.raw.listenmed16
         ),
         MeditationCardDay(
             17,
             "Dia 17",
             "AQUÍ EN MI CARPINTERÍA, TOMAD LA DECISIÓN DE VIVIR EN DIOS Y PARA DIOS",
-            R.drawable.day17, R.raw.listenmed17, false
+            R.drawable.day17, R.raw.listenmed17
         ),
         MeditationCardDay(
             18,
             "Dia 18",
             "EN ESTE DÍA TOMO EN MIS MANOS LAS INTENCIONES DE TU ORACIÓN",
-            R.drawable.day18, R.raw.listenmed18, false
+            R.drawable.day18, R.raw.listenmed18
         ),
         MeditationCardDay(
             19,
             "Dia 19",
             "HOY CAMINA EN LA CERTEZA DE QUE TU ORACIÓN HA SIDO ESCUCHADA POR EL SEÑOR",
-            R.drawable.day19, R.raw.listenmed19, false
+            R.drawable.day19, R.raw.listenmed19
         ),
         MeditationCardDay(
             20,
             "Dia 20",
             "MI TALLER DEBE SER PARA TI LUGAR DE CONSOLACIÓN",
-            R.drawable.day20, R.raw.listenmed20, false
+            R.drawable.day20, R.raw.listenmed20
         ),
         MeditationCardDay(
             21,
             "Dia 21",
             "COMO PATRONO DE LA VIDA INTERIOR CUIDARÉ SIEMPRE DE TI",
-            R.drawable.day21, R.raw.listenmed21, false
+            R.drawable.day21, R.raw.listenmed21
         ),
         MeditationCardDay(
             22,
             "Dia 22",
             "EN MI TALLER PODRÁS VER REALIZADOS GRANDES MILAGROS",
-            R.drawable.day22, R.raw.listenmed22, false
+            R.drawable.day22, R.raw.listenmed22
         ),
         MeditationCardDay(
             23,
             "Dia 23",
             "SIEMPRE ASISTO A MIS DEVOTOS, NO LOS DEJO SOLOS EN SUS ANGUSTIAS",
-            R.drawable.day23, R.raw.listenmed23, false
+            R.drawable.day23, R.raw.listenmed23
         ),
         MeditationCardDay(
             24,
             "Dia 24",
             "EN ESTE DÍA QUIERO DEJAR EN TI UN BELLO RECUERDO",
-            R.drawable.day24, R.raw.listenmed24, false
+            R.drawable.day24, R.raw.listenmed24
         ),
         MeditationCardDay(
             25,
             "Dia 25",
             "¿QUÉ PUEDO HACER POR TI EN ESTE DÍA",
             R.drawable.day25,
-            R.raw.listenmed25, false
+            R.raw.listenmed25
         ),
         MeditationCardDay(
             26,
             "Dia 26",
             "NO TE DEJES PERTURBAR NI PIENSES MÁS EN LA DERROTA",
-            R.drawable.day26, R.raw.listenmed26, false
+            R.drawable.day26, R.raw.listenmed26
         ),
         MeditationCardDay(
             27,
             "Dia 27",
             "HOY DIME QUE SIENTES LA NECESIDAD DE CAMBIAR EN TU VIDA",
-            R.drawable.day27, R.raw.listenmed27, false
+            R.drawable.day27, R.raw.listenmed27
         ),
         MeditationCardDay(
             28,
             "Dia 28",
             "¿QUÉ GRACIA ESPECIAL ESPERAS OBTENER EN ESTA VISITA?",
-            R.drawable.day28, R.raw.listenmed28, false
+            R.drawable.day28, R.raw.listenmed28
         ),
         MeditationCardDay(
             29,
             "Dia 29",
             "MI CARPINTERÍA ESTÁ ABIERTA LAS 24 HORAS DEL DIA",
-            R.drawable.day29, R.raw.listenmed29, false
+            R.drawable.day29, R.raw.listenmed29
         ),
         MeditationCardDay(
             30,
             "Dia 30",
             "EN ESTA TREINTENA EL SOL SE MANTENDRÁ SOBRE TI",
-            R.drawable.day30, R.raw.listenmed30, false
+            R.drawable.day30, R.raw.listenmed30
         ),
+        MeditationCardDay(
+            dayNum = 31,
+            day = "Consagración",
+            meditationDay = "FINALIZADOS LOS 30 DÍAS DE ORACIÓN, CONSÁGRATE A San José",
+            R.drawable.day1, R.raw.listenmed1
+        )
     )
 
 }

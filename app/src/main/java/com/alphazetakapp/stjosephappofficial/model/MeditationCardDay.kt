@@ -8,6 +8,5 @@ data class MeditationCardDay(
     var day: String,
     var meditationDay: String,
     @DrawableRes var photo: Int,
-    @RawRes var dailyRecord: Int,
-    var isFinished: Boolean
+    @RawRes var dailyRecord: Int
 )
