@@ -20,7 +20,6 @@ import androidx.compose.material.icons.outlined.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,9 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
@@ -60,17 +59,11 @@ fun MainScreen(navController: NavController, context: Context) {
         }
     }
 
-    val textWithStylesTitle = buildAnnotatedString {
-        withStyle(
-            style = SpanStyle(
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Default
-            )
-        ) {
-            append(title)
-        }
-    }
+    val textStyleTitleDos = TextStyle(
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = FontFamily.Default
+    )
 
 
     Column(
@@ -81,19 +74,12 @@ fun MainScreen(navController: NavController, context: Context) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(backColor)
-                .padding(4.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Text(
-                text = textWithStylesTitle,
-                color = Color.White,
-                textAlign = TextAlign.Center
-            )
-        }
+        Text(
+            text = title,
+            color = Color.White,
+            textAlign = TextAlign.Center,
+            style = textStyleTitleDos
+        )
         Spacer(modifier = Modifier.height(8.dp))
         Box(
             modifier = Modifier
@@ -101,7 +87,7 @@ fun MainScreen(navController: NavController, context: Context) {
                 .background(backColor)
                 .padding(4.dp)
                 .verticalScroll(rememberScrollState())
-        ){
+        ) {
             Text(
                 text = textWithStyles,
                 modifier = Modifier
@@ -118,7 +104,7 @@ fun MainScreen(navController: NavController, context: Context) {
                 .background(backColor)
                 .padding(4.dp),
             contentAlignment = Alignment.BottomEnd
-        ){
+        ) {
             Row {
                 Button(
                     onClick = { navController.navigate(Routes.PrepMeditation.routes) },
