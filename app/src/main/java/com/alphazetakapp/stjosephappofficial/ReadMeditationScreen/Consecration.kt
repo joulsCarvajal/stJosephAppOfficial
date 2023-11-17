@@ -118,7 +118,7 @@ fun ExpandableMining(mining: String) {
                     modifier = Modifier.size(24.dp)
                 )
                 Text(
-                    text = if (isExpanded) text else text.take(42), // Mostrar solo una parte del texto cuando está contraído
+                    text = if (isExpanded) text else text.take(33), // Mostrar solo una parte del texto cuando está contraído
                     color = Color.Black,
                     modifier = Modifier
                         .padding(vertical = 8.dp)
