@@ -123,7 +123,8 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         MeditationDay(27, meditationText),
         MeditationDay(28, meditationText),
         MeditationDay(29, meditationText),
-        MeditationDay(30, meditationText)
+        MeditationDay(30, meditationText),
+        MeditationDay(31, meditationText)
     )
 
     val context = LocalContext.current
@@ -233,7 +234,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         Spacer(modifier = Modifier.padding(4.dp))
         Box(
             modifier = Modifier
-                .height(200.dp)
+                .height(100.dp)
                 .background(backgroundColor)
                 .verticalScroll(rememberScrollState())
 

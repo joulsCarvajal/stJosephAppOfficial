@@ -11,8 +11,8 @@ android {
         applicationId = "com.alphazetakapp.stjosephappofficial"
         minSdk = 22
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -76,4 +76,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences-rxjava2:1.0.0")
     // optional - RxJava3 support
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
+
+    //Ads tipo banner
+    implementation ("com.google.android.gms:play-services-ads:22.5.0")
 }
