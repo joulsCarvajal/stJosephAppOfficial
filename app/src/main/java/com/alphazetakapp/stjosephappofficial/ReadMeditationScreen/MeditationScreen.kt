@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -41,12 +40,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -55,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import com.alphazetakapp.stjosephappofficial.R
 import com.alphazetakapp.stjosephappofficial.datastore.StoreEndDay
 import com.alphazetakapp.stjosephappofficial.model.MeditationDay
+import com.alphazetakapp.stjosephappofficial.ui.BannerAppSmall
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlin.math.max
@@ -147,6 +145,10 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        BannerAppSmall(
+            adId = "ca-app-pub-4246199849789587/5444152964" //Id de Producción
+            /*adId = "ca-app-pub-3940256099942544/6300978111"*/ //Id de pruebas
+        )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
