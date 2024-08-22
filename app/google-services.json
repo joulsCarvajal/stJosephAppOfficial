@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "801632855493",
+    "project_id": "stjosephappofficial",
+    "storage_bucket": "stjosephappofficial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801632855493:android:0874fb232941b0aab257ac",
+        "android_client_info": {
+          "package_name": "com.alphazetakapp.stjosephappofficial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_B-Vn01Xzl0__biefTPTChI_IN8WCayc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
