@@ -50,7 +50,7 @@ fun PrepMeditation(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         BannerAppSmall(
-            adId = "ca-app-pub-4246199849789587/5444152964" //Id de Producción
+            //adId = "ca-app-pub-4246199849789587/5444152964" //Id de Producción
             /*adId = "ca-app-pub-3940256099942544/6300978111"*/ //Id de pruebas
         )
         Spacer(modifier = Modifier.size(8.dp))
