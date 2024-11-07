@@ -278,7 +278,7 @@ fun PlayAudioRosary(context: Context) {
     var playbackSpeed by remember { mutableStateOf(1.0f) }
 
     DisposableEffect(Unit) {
-        mp = MediaPlayer.create(context, R.raw.rosariosanjose)
+            mp = MediaPlayer.create(context, R.raw.rosariosanjose)
 
         onDispose {
             mp?.release()
