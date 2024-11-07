@@ -1,4 +1,4 @@
-package com.alphazetakapp.stjosephappofficial.ui
+package com.alphazetakapp.stjosephappofficial
 
 import android.content.pm.ActivityInfo
 import android.os.Build
@@ -8,11 +8,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.platform.LocalContext
-import com.alphazetakapp.stjosephappofficial.navigation.AppNavigation
+import com.alphazetakapp.stjosephappofficial.presentation.navigation.AppNavigation
 import com.alphazetakapp.stjosephappofficial.ui.theme.StjosephappofficialTheme
-import com.google.android.gms.ads.MobileAds
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.alphazetakapp.stjosephappofficial.model
+package com.alphazetakapp.stjosephappofficial.domain.model
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
