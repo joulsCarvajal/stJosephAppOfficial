@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -43,6 +44,33 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    flavorDimensions += "environment"
+
+    productFlavors{
+        create("dev"){
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            manifestPlaceholders["adMobAppId"] = "ca-app-pub-3940256099942544/9214589741" // ID de prueba con Banner de tamaño adaptable
+            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
+
+            //ID de pruebas
+            //buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544~3347511713\"")
+            //buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
+            //buildConfigField("String", "REWARDED_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/5224354917\"")
+        }
+
+        create("prod"){
+            dimension = "environment"
+            manifestPlaceholders["adMobAppId"] = "ca-app-pub-4246199849789587~9714608451" // Tu ID real
+            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-4246199849789587~9714608451\"")
+
+            //ID de producción
+            //buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-4246199849789587~9714608451\"")
+            //buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"tu-id-de-interstitial-real\"")
+            //buildConfigField("String", "REWARDED_AD_UNIT_ID", "\"tu-id-de-rewarded-real\"")
         }
     }
 }

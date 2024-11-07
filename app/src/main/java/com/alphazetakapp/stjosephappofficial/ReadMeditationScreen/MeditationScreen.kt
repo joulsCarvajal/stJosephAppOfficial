@@ -146,7 +146,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         BannerAppSmall(
-            adId = "ca-app-pub-4246199849789587/5444152964" //Id de Producción
+            //adId = "ca-app-pub-4246199849789587/5444152964" //Id de Producción
             /*adId = "ca-app-pub-3940256099942544/6300978111"*/ //Id de pruebas
         )
         Box(
