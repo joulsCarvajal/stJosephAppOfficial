@@ -1,20 +1,19 @@
-package com.alphazetakapp.stjosephappofficial.navigation
+package com.alphazetakapp.stjosephappofficial.presentation.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.alphazetakapp.stjosephappofficial.ReadMeditationScreen.MeditationScreen
 import com.alphazetakapp.stjosephappofficial.ReadMeditationScreen.TheNewScreen
-import com.alphazetakapp.stjosephappofficial.SelectedDay.DaysScreen
-import com.alphazetakapp.stjosephappofficial.ui.MainScreen
-import com.alphazetakapp.stjosephappofficial.ui.PrepMeditation
+import com.alphazetakapp.stjosephappofficial.presentation.meditation.detail.MeditationScreen
+import com.alphazetakapp.stjosephappofficial.presentation.meditation.list.DaysScreen
+import com.alphazetakapp.stjosephappofficial.presentation.preparation.PrepScreen
+import com.alphazetakapp.stjosephappofficial.presentation.welcome.WelcomeScreen
 
 @RequiresApi(Build.VERSION_CODES.M)
 @Composable
@@ -23,20 +22,22 @@ fun AppNavigation() {
 
     NavHost(
         navController = navigationController,
-        startDestination = Routes.MainScreen.routes
+        startDestination = Screen.Welcome.route
     ) {
-        composable(Routes.MainScreen.routes) {
-            val context = LocalContext.current
-            MainScreen(navigationController, context = context)
+        composable(Screen.Welcome.route) {
+            WelcomeScreen(navigationController, viewModel = hiltViewModel())
         }
-        composable(Routes.PrepMeditation.routes) {
-            PrepMeditation(navigationController)
+        composable(Screen.Preparation.route) {
+            PrepScreen(navigationController, viewModel = hiltViewModel())
         }
-        composable(Routes.DaysScreen.routes) {
-            DaysScreen(navigationController)
+        composable(Screen.Days.route) {
+            DaysScreen(
+                navController = navigationController,
+                viewModel = hiltViewModel()
+            )
         }
         composable(
-            Routes.MeditationScreen.routes,
+            route = Screen.MeditationNav.route,
             arguments = listOf(
                 navArgument("day") { defaultValue = "Day X" },
                 navArgument("dayNum") { defaultValue = 0 },
@@ -52,9 +53,7 @@ fun AppNavigation() {
             } else {
                 MeditationScreen(
                     dayNum = dayNum,
-                    day = day,
-                    dailyRecord = dailyRecord,
-                    context = context
+                    viewModel = hiltViewModel()
                 )
             }
         }

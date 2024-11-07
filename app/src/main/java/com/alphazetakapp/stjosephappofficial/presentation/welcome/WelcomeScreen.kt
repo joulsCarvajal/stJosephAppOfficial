@@ -1,6 +1,5 @@
-package com.alphazetakapp.stjosephappofficial.ui
+package com.alphazetakapp.stjosephappofficial.presentation.welcome
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,12 +36,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.alphazetakapp.stjosephappofficial.R
-import com.alphazetakapp.stjosephappofficial.navigation.Routes
+import com.alphazetakapp.stjosephappofficial.presentation.navigation.Routes
 
 @Composable
-fun MainScreen(navController: NavController, context: Context) {
+fun WelcomeScreen(navController: NavController, viewModel: WelcomeViewModel = hiltViewModel()) {
     val backColor = colorResource(id = R.color.backgroundColorApp)
     val mainText = stringResource(id = R.string.main_screen_text)
     val title = stringResource(id = R.string.title_main_screen)

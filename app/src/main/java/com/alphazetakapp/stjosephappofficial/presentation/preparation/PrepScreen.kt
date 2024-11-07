@@ -1,4 +1,4 @@
-package com.alphazetakapp.stjosephappofficial.ui
+package com.alphazetakapp.stjosephappofficial.presentation.preparation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,13 +29,15 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.alphazetakapp.stjosephappofficial.R
-import com.alphazetakapp.stjosephappofficial.navigation.Routes
+import com.alphazetakapp.stjosephappofficial.presentation.navigation.Routes
+import com.alphazetakapp.stjosephappofficial.ui.BannerApp
 import com.google.android.gms.ads.MobileAds
 
 @Composable
-fun PrepMeditation(navController: NavController) {
+fun PrepScreen(navController: NavController, viewModel: PrepViewModel = hiltViewModel()){
     val backColor = colorResource(id = R.color.backgroundColorApp)
     val context = LocalContext.current
 
@@ -49,10 +51,7 @@ fun PrepMeditation(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BannerAppSmall(
-            //adId = "ca-app-pub-4246199849789587/5444152964" //Id de Producción
-            /*adId = "ca-app-pub-3940256099942544/6300978111"*/ //Id de pruebas
-        )
+        BannerApp()
         Spacer(modifier = Modifier.size(8.dp))
         Box(
             modifier = Modifier
@@ -71,7 +70,7 @@ fun PrepMeditation(navController: NavController) {
         Spacer(modifier = Modifier.size(16.dp))
         Row(modifier = Modifier.align(Alignment.End)) {
             Button(
-                onClick = { navController.navigate(Routes.DaysScreen.routes)},
+                onClick = { navController.navigate(Routes.DaysScreen.routes) },
                 modifier = Modifier
                     .size(70.dp)
                     .clip(CircleShape),

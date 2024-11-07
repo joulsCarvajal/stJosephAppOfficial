@@ -14,26 +14,8 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 
-/*@Composable
-fun BannerApp(adId: String) {
-    Column {
-        Spacer(modifier = Modifier.size(8.dp))
-        AndroidView(
-            modifier = Modifier.fillMaxWidth(),
-            factory = { context ->
-                AdView(context).apply {
-                    setAdSize(AdSize.FULL_BANNER)
-                    adUnitId = adId
-                    //Request an Ad
-                    loadAd(AdRequest.Builder().build())
-                }
-            }
-        )
-    }
-}*/
-
 @Composable
-fun BannerAppSmall(
+fun BannerApp(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current

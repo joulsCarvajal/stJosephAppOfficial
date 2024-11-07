@@ -1,4 +1,4 @@
-package com.alphazetakapp.stjosephappofficial.navigation
+package com.alphazetakapp.stjosephappofficial.presentation.navigation
 
 sealed class Routes (val routes: String){
     object MainScreen: Routes("main_screen")

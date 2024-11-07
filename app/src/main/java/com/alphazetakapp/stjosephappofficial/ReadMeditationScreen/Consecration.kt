@@ -36,7 +36,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alphazetakapp.stjosephappofficial.R
-import com.alphazetakapp.stjosephappofficial.ui.BannerAppSmall
+import com.alphazetakapp.stjosephappofficial.ui.BannerApp
 import com.google.android.gms.ads.MobileAds
 
 @Composable
@@ -56,10 +56,7 @@ fun TheNewScreen() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BannerAppSmall(
-            //adId = "ca-app-pub-4246199849789587/5444152964" //Id de producción
-            /*adId = "ca-app-pub-3940256099942544/6300978111"*/ //Id de pruebas
-        )
+        BannerApp()
         Spacer(modifier = Modifier.size(8.dp))
         ExpandableMining(mining = title)
         Spacer(modifier = Modifier.size(8.dp))

@@ -51,8 +51,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alphazetakapp.stjosephappofficial.R
 import com.alphazetakapp.stjosephappofficial.datastore.StoreEndDay
-import com.alphazetakapp.stjosephappofficial.model.MeditationDay
-import com.alphazetakapp.stjosephappofficial.ui.BannerAppSmall
+import com.alphazetakapp.stjosephappofficial.domain.model.MeditationDay
+import com.alphazetakapp.stjosephappofficial.ui.BannerApp
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlin.math.max
@@ -145,7 +145,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BannerAppSmall(
+        BannerApp(
             //adId = "ca-app-pub-4246199849789587/5444152964" //Id de Producción
             /*adId = "ca-app-pub-3940256099942544/6300978111"*/ //Id de pruebas
         )
@@ -278,7 +278,7 @@ fun PlayAudioRosary(context: Context) {
     var playbackSpeed by remember { mutableStateOf(1.0f) }
 
     DisposableEffect(Unit) {
-            mp = MediaPlayer.create(context, R.raw.rosariosanjose)
+        mp = MediaPlayer.create(context, R.raw.rosariosanjose)
 
         onDispose {
             mp?.release()

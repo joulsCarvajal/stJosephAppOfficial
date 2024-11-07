@@ -2,6 +2,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -53,7 +55,8 @@ android {
         create("dev"){
             dimension = "environment"
             applicationIdSuffix = ".dev"
-            manifestPlaceholders["adMobAppId"] = "ca-app-pub-3940256099942544/9214589741" // ID de prueba con Banner de tamaño adaptable
+            // Configura el ID de la app de AdMob para desarrollo
+            manifestPlaceholders["adMobAppId"] = "ca-app-pub-3940256099942544~3347511713"  // ID de prueba de AdMob
             buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
 
             //ID de pruebas
@@ -105,4 +108,20 @@ dependencies {
 
     //Ads tipo banner
     implementation ("com.google.android.gms:play-services-ads:22.5.0")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
+
+    // Para usar Hilt con Navigation Compose
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    // Si usas WorkManager con Hilt
+    implementation("androidx.hilt:hilt-work:1.2.0")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
+
+}
+
+kapt {
+    correctErrorTypes = true
 }
