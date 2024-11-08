@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -86,7 +87,9 @@ private fun MeditationDaysList(
     selectedDay: Int?,
     onDaySelected: (Meditation) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn (
+        contentPadding = PaddingValues(bottom = 40.dp)
+    ) {
         items(meditations) { meditation ->
             MeditationDayCard(
                 meditation = meditation,

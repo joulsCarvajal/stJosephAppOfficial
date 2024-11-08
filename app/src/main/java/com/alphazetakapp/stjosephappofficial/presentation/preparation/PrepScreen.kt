@@ -3,13 +3,17 @@ package com.alphazetakapp.stjosephappofficial.presentation.preparation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -20,6 +24,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,49 +38,66 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.alphazetakapp.stjosephappofficial.R
 import com.alphazetakapp.stjosephappofficial.presentation.navigation.Routes
+import com.alphazetakapp.stjosephappofficial.presentation.navigation.Screen
 import com.alphazetakapp.stjosephappofficial.ui.BannerApp
 import com.google.android.gms.ads.MobileAds
 
 @Composable
-fun PrepScreen(navController: NavController, viewModel: PrepViewModel = hiltViewModel()){
+fun PrepScreen(navController: NavController, viewModel: PrepViewModel = hiltViewModel()) {
     val backColor = colorResource(id = R.color.backgroundColorApp)
     val context = LocalContext.current
 
-    MobileAds.initialize(context)
+    LaunchedEffect(Unit) {
+        MobileAds.initialize(context) {}
+    }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(backColor)
-            .padding(18.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        BannerApp()
-        Spacer(modifier = Modifier.size(8.dp))
+        // Banner posicionado absolutamente en la parte superior
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(backColor)
-                .padding(4.dp)
-                .verticalScroll(rememberScrollState())
+                .align(Alignment.TopCenter)
+                .padding(top = 24.dp)
+        ) {
+            BannerApp()
+        }
+
+        // Contenido principal
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 18.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "❤️ TREINTENA A  SAN JOSÉ ❤️\n" + "\uD83D\uDC63PASOS A SEGUIR\uD83D\uDC63\n" + "\n" + "1.- Rosario a San José\n" + "(te invitamos a escuchar el audio para ayudarte a entender  como se reza)\n" + "2- Letanías a San José\n" + "3.- Meditación\n" + "4.- Oración final.\n" + "\n" + "NOTA: Cada paso, va llevar su parte escrita y su audio\n" + "Por si quieres escucharla o leerla o ambas.",
+                text = "❤️ TREINTENA A  SAN JOSÉ ❤️\n" +
+                        "\uD83D\uDC63PASOS A SEGUIR\uD83D\uDC63\n" +
+                        "\n" +
+                        "1.- Rosario a San José\n" +
+                        "(te invitamos a escuchar el audio para ayudarte a entender  como se reza)\n" +
+                        "2- Letanías a San José\n" +
+                        "3.- Meditación\n" +
+                        "4.- Oración final.\n" +
+                        "\n" +
+                        "NOTA: Cada paso, va llevar su parte escrita y su audio\n" +
+                        "Por si quieres escucharla o leerla o ambas.",
                 color = Color.White,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center
             )
-        }
-        Spacer(modifier = Modifier.size(16.dp))
-        Row(modifier = Modifier.align(Alignment.End)) {
+            Spacer(modifier = Modifier.size(16.dp))
             Button(
-                onClick = { navController.navigate(Routes.DaysScreen.routes) },
+                onClick = { navController.navigate(Screen.Days.route) },
                 modifier = Modifier
                     .size(70.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .align(alignment = Alignment.End),
                 colors = ButtonDefaults.buttonColors(
-                    Color(0xFFF2A71B),
+                    containerColor = Color(0xFFF2A71B),
                     contentColor = Color.Black
                 )
             ) {
