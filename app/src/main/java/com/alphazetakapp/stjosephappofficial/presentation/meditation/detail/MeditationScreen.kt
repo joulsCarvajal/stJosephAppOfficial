@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -273,6 +274,8 @@ private fun AudioControls(
     playbackState: PlaybackState,
     onAction: (AudioAction) -> Unit
 ) {
+    val iconColor = colorResource(id = R.color.backgroundColorApp)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -295,7 +298,8 @@ private fun AudioControls(
                     id = if (playbackState.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
                 ),
                 contentDescription = if (playbackState.isPlaying) "Pausar" else "Reproducir",
-                tint = Color.White
+                tint = iconColor,
+                modifier = Modifier.size(24.dp)
             )
         }
 
@@ -304,7 +308,8 @@ private fun AudioControls(
             Icon(
                 painter = painterResource(id = R.drawable.ic_stop),
                 contentDescription = "Detener",
-                tint = Color.White
+                tint = iconColor,
+                modifier = Modifier.size(24.dp)
             )
         }
 
@@ -315,9 +320,10 @@ private fun AudioControls(
             }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_volume_up),
+                painter = painterResource(id = R.drawable.rapido),
                 contentDescription = "Aumentar velocidad",
-                tint = Color.White
+                tint = iconColor,
+                modifier = Modifier.size(24.dp)
             )
         }
 
@@ -328,9 +334,10 @@ private fun AudioControls(
             }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_volume_down),
+                painter = painterResource(id = R.drawable.lento_menos),
                 contentDescription = "Reducir velocidad",
-                tint = Color.White
+                tint = iconColor,
+                modifier = Modifier.size(24.dp)
             )
         }
     }

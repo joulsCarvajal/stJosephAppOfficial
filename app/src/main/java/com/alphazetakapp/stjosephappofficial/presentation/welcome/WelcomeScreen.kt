@@ -40,6 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.alphazetakapp.stjosephappofficial.R
 import com.alphazetakapp.stjosephappofficial.presentation.navigation.Routes
+import com.alphazetakapp.stjosephappofficial.presentation.navigation.Screen
 
 @Composable
 fun WelcomeScreen(navController: NavController, viewModel: WelcomeViewModel = hiltViewModel()) {
@@ -97,7 +98,6 @@ fun WelcomeScreen(navController: NavController, viewModel: WelcomeViewModel = hi
                 color = Color.White
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -107,7 +107,7 @@ fun WelcomeScreen(navController: NavController, viewModel: WelcomeViewModel = hi
         ) {
             Row {
                 Button(
-                    onClick = { navController.navigate(Routes.PrepMeditation.routes) },
+                    onClick = { navController.navigate(Screen.Preparation.route) },
                     modifier = Modifier
                         .size(70.dp)
                         .clip(CircleShape),
