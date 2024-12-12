@@ -8,5 +8,7 @@ data class Meditation(
     val imageResId: Int,
     val audioResId: Int,
     val dailyRecord: Int? = 0,
-    val isCompleted: Boolean = false
+    val isCompleted: Boolean = false,
+    val isLocked: Boolean = false,
+    val isConsecration: Boolean = false
 )

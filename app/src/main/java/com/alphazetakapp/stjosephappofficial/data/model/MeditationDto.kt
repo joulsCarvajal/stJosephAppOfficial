@@ -7,7 +7,8 @@ data class MeditationDto (
     val day: String,
     val meditationDay: String,
     val imageResId: Int,
-    val audioResId: Int
+    val audioResId: Int,
+    val isConsecration: Boolean = false
 ){
     fun toDomain() = Meditation(
         id = dayNum,
