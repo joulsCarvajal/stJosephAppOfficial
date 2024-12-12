@@ -17,15 +17,32 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -48,6 +65,7 @@ fun DaysScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val selectedDay by viewModel.selectedDay.collectAsState()
+    var showResetDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -57,26 +75,73 @@ fun DaysScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        when (uiState) {
-            is DaysUiState.Loading -> LoadingIndicator()
-            is DaysUiState.Error -> ErrorMessage((uiState as DaysUiState.Error).message)
-            is DaysUiState.Success -> {
-                MeditationDaysList(
-                    meditations = (uiState as DaysUiState.Success).meditations,
-                    selectedDay = selectedDay,
-                    onDaySelected = { meditation ->
-                        viewModel.onDaySelected(meditation.dayNum)
-                        navController.navigate(
-                            Screen.MeditationNav.createRoute(
-                                dayNum = meditation.dayNum,
-                                day = meditation.day,
-                                dailyRecord = meditation.dailyRecord ?: 0
-                            )
-                        )
-                    }
-                )
-            }
+
+        Button(
+            onClick = { showResetDialog = true },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF4A3000)  // Un marrón oscuro que combine con tu tema
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Refresh,
+                contentDescription = "Reiniciar",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text("Reiniciar Treintena")
         }
+
+        // Diálogo de confirmación
+        if (showResetDialog) {
+            AlertDialog(
+                onDismissRequest = { showResetDialog = false },
+                title = { Text("Reiniciar Treintena") },
+                text = {
+                    Text(
+                        "¿Estás seguro de que deseas reiniciar la Treintena? " +
+                                "Esto desmarcará todos los días completados."
+                    )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.resetAllDays()
+                            showResetDialog = false
+                        }
+                    ) {
+                        Text("Sí, reiniciar")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showResetDialog = false }) {
+                        Text("Cancelar")
+                    }
+                }
+            )
+        }
+
+            when (uiState) {
+                is DaysUiState.Loading -> LoadingIndicator()
+                is DaysUiState.Error -> ErrorMessage((uiState as DaysUiState.Error).message)
+                is DaysUiState.Success -> {
+                    MeditationDaysList(
+                        meditations = (uiState as DaysUiState.Success).meditations,
+                        selectedDay = selectedDay,
+                        onDaySelected = { meditation ->
+                            viewModel.onDaySelected(meditation.dayNum)
+                            navController.navigate(
+                                Screen.MeditationNav.createRoute(
+                                    dayNum = meditation.dayNum,
+                                    day = meditation.day,
+                                    dailyRecord = meditation.dailyRecord ?: 0
+                                )
+                            )
+                        }
+                    )
+                }
+            }
     }
 }
 
@@ -87,7 +152,7 @@ private fun MeditationDaysList(
     selectedDay: Int?,
     onDaySelected: (Meditation) -> Unit
 ) {
-    LazyColumn (
+    LazyColumn(
         contentPadding = PaddingValues(bottom = 40.dp)
     ) {
         items(meditations) { meditation ->
@@ -107,7 +172,43 @@ private fun MeditationDayCard(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val backColor = colorResource(id = R.color.backgroundColorApp)
+    val backColor = if (meditation.isCompleted) {
+        colorResource(id = R.color.backgroundColorApp).copy(alpha = 0.7f)
+    } else {
+        colorResource(id = R.color.backgroundColorApp)
+    }
+
+    val iconState = when {
+        meditation.isConsecration && meditation.isCompleted -> IconState(
+            vector = Icons.Filled.CheckCircle,
+            tint = Color(0xFF4CAF50),
+            description = "Consagración completada"
+        )
+
+        meditation.isConsecration -> IconState(
+            vector = Icons.Outlined.CheckCircle,  // Cambiamos de Lock a RadioButtonUnchecked para la consagración
+            tint = Color.White,
+            description = "Consagración disponible"
+        )
+
+        meditation.isCompleted -> IconState(
+            vector = Icons.Filled.CheckCircle,
+            tint = Color(0xFF4CAF50),
+            description = "Día completado"
+        )
+
+        meditation.isLocked -> IconState(
+            vector = Icons.Default.Lock,
+            tint = Color.Gray,
+            description = "Día bloqueado"
+        )
+
+        else -> IconState(
+            vector = Icons.Outlined.CheckCircle,
+            tint = Color.White,
+            description = "Día disponible"
+        )
+    }
 
     Card(
         modifier = Modifier
@@ -133,28 +234,43 @@ private fun MeditationDayCard(
                 alignment = Alignment.CenterStart
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = 8.dp)
+            ) {
                 Text(
                     text = meditation.day,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Cursive,
-                    modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
-                Spacer(modifier = Modifier.size(4.dp))
+
                 Text(
                     text = meditation.meditationDay,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(end = 18.dp)
-                        .padding(bottom = 8.dp),
-                    color = Color.White
+                    color = Color.White,
+                    modifier = Modifier.padding(end = 8.dp)
                 )
             }
+
+            Icon(
+                imageVector = iconState.vector,
+                contentDescription = iconState.description,
+                tint = iconState.tint,
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .size(24.dp)
+            )
         }
     }
 }
+
+private data class IconState(
+    val vector: ImageVector,
+    val tint: Color,
+    val description: String
+)

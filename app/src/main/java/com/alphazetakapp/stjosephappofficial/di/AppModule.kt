@@ -56,6 +56,12 @@ object AppModule {
         return GetLastCompletedDayUseCase(repository)
     }
 
+    @Provides
+    @Singleton
+    fun provideSetDayCompletedUseCase(repository: MeditationRepository): SetDayCompletedUseCase {
+        return SetDayCompletedUseCase(repository)
+    }
+
 //    @Provides
 //    @Singleton
 //    fun provideSetDayCompletedUseCase(repository: MeditationRepository): SetDayCompletedUseCase {

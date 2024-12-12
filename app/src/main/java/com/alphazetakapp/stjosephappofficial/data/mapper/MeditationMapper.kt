@@ -11,6 +11,7 @@ class MeditationMapper @Inject constructor() {
         day = dto.day,
         meditationDay = dto.meditationDay,
         imageResId = dto.imageResId,
-        audioResId = dto.audioResId
+        audioResId = dto.audioResId,
+        isConsecration = dto.isConsecration
     )
 }

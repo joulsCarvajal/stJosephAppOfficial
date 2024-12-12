@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface MeditationRepository {
     suspend fun getMeditations(): Flow<List<Meditation>>
     suspend fun getLastCompletedDay(): Flow<Int>
-    suspend fun setDayCompleted(dayNum: Int)
+    suspend fun setDayCompleted(dayNum: Int, isCompleted: Boolean): Flow<Int>
 }

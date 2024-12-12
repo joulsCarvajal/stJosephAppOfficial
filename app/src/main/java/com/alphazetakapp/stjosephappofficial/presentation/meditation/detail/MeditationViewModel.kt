@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alphazetakapp.stjosephappofficial.R
 import com.alphazetakapp.stjosephappofficial.datastore.StoreEndDay
+import com.alphazetakapp.stjosephappofficial.domain.usecase.GetMeditationsUseCase
+import com.alphazetakapp.stjosephappofficial.domain.usecase.SetDayCompletedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MeditationViewModel @Inject constructor(
     private val storeEndDay: StoreEndDay,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val getMeditationUseCase: GetMeditationsUseCase,
+    private val setDayCompletedUseCase: SetDayCompletedUseCase
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow<MeditationDetailState>(MeditationDetailState.Loading)
@@ -55,7 +59,10 @@ class MeditationViewModel @Inject constructor(
 
     fun toggleDayCompletion(dayNum: Int, isCompleted: Boolean) {
         viewModelScope.launch {
-            storeEndDay.saveSwitchStateForDay(dayNum, isCompleted)
+            setDayCompletedUseCase(dayNum, isCompleted)
+                .collect{ _ ->
+                    loadMeditationData(dayNum)
+                }
         }
     }
 

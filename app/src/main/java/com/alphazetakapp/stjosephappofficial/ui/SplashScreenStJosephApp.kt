@@ -1,5 +1,6 @@
 package com.alphazetakapp.stjosephappofficial.ui
 
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -32,11 +33,14 @@ fun SplashScreenStJosephApp(){
         Animatable(0f)
     }
     val context = LocalContext.current
-    LaunchedEffect(key1 = true, block = {
+    val activity = (context as? Activity)
+
+    LaunchedEffect(key1 = true) {
         alpha.animateTo(1f, animationSpec = tween(1300))
-        /*delay(1000)*/
         context.startActivity(Intent(context, MainActivity::class.java))
-    })
+        // Finalizamos el SplashActivity para que no quede en el stack
+        activity?.finish()
+    }
 
     Box(
         modifier = Modifier
