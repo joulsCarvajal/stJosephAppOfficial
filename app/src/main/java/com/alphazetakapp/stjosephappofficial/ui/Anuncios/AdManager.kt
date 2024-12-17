@@ -10,7 +10,7 @@ import com.google.android.gms.ads.RequestConfiguration
 class AdManager(private val context: Context) {
     init {
         MobileAds.initialize(context)
-        Log.d("AdManager", "MobileAds initialized with applicationId: ${context.packageName}")
+        Log.d("AdManager", "MobileAds initialized with Id: ${BuildConfig.BANNER_AD_UNIT_ID}")
 
         if (BuildConfig.DEBUG){
             val testDeviceIds = listOf("TEST-DEVICE-ID")
@@ -28,7 +28,7 @@ class AdManager(private val context: Context) {
             AdConstants.BANNER_AD_PROD
         }
         Log.d("AdManager", "Using Ad ID: $adId")
-        return adId
+        return BuildConfig.BANNER_AD_UNIT_ID
     }
 
     companion object {

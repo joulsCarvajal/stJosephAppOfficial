@@ -14,8 +14,8 @@ android {
         applicationId = "com.alphazetakapp.stjosephappofficial"
         minSdk = 22
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.0.9"
+        versionCode = 11
+        versionName = "1.0.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -57,23 +57,13 @@ android {
             applicationIdSuffix = ".dev"
             // Configura el ID de la app de AdMob para desarrollo
             manifestPlaceholders["adMobAppId"] = "ca-app-pub-3940256099942544~3347511713"  // ID de prueba de AdMob
-            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
-
-            //ID de pruebas
-            //buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544~3347511713\"")
-            //buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
-            //buildConfigField("String", "REWARDED_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/5224354917\"")
+            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/9214589741\"")
         }
 
-        create("prod"){
+        create("prod") {
             dimension = "environment"
-            manifestPlaceholders["adMobAppId"] = "ca-app-pub-4246199849789587~9714608451" // Tu ID real
-            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-4246199849789587~9714608451\"")
-
-            //ID de producción
-            //buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-4246199849789587~9714608451\"")
-            //buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"tu-id-de-interstitial-real\"")
-            //buildConfigField("String", "REWARDED_AD_UNIT_ID", "\"tu-id-de-rewarded-real\"")
+            manifestPlaceholders["adMobAppId"] = "ca-app-pub-4246199849789587~9714608451"  // APP_ID_PROD
+            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-4246199849789587/5444152964\"")  // BANNER_AD_PROD
         }
     }
 }
