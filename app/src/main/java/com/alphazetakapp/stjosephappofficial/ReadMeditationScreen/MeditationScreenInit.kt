@@ -61,7 +61,7 @@ import kotlin.math.max
 @Composable
 fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Context) {
     val backColor = colorResource(id = R.color.backgroundColorApp)
-    val contrastColor = colorResource(id = R.color.contrastColorApp)
+    val contrastColor = colorResource(id = R.color.backgroundColorApp)
     val meditationTextResId =
         context.resources.getIdentifier("meditation_day_$dayNum", "string", context.packageName)
     val meditationText = context.getString(meditationTextResId)

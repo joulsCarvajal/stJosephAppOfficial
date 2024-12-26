@@ -45,7 +45,7 @@ fun SplashScreenStJosephApp(){
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF4C2709))
+            .background(color = Color(0xFF8B4513))
     ){
         Column(
             modifier = Modifier

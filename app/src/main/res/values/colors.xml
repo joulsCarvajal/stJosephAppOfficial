@@ -7,6 +7,8 @@
     <color name="teal_700">#F2A71B</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="backgroundColorApp">#4C2709</color>
-    <color name="contrastColorApp">#522C0D</color>
+    <color name="backgroundColorApp">#8B4513</color>
+    <color name="cardBackground">#A0522D</color>
+    <color name="textColorPrimary">#FFFFFF</color>   // Blanco para texto principal
+    <color name="textColorSecondary">#FFF9F1</color> // Gris claro para texto secundario
 </resources>

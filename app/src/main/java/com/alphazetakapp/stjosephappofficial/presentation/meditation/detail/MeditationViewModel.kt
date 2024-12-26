@@ -76,11 +76,18 @@ class MeditationViewModel @Inject constructor(
     }
 
     private fun getAudioResource(audioType: AudioType): Int {
+        val currentState = _uiState.value
         return when (audioType) {
             AudioType.ROSARY -> R.raw.rosariosanjose
             AudioType.LITANIES -> R.raw.letanias
             AudioType.FINAL_PRAY -> R.raw.oracionfinal
-            AudioType.DAILY_MEDITATION -> R.raw.listenmed1 // Esto debería ser dinámico basado en el día
+            AudioType.DAILY_MEDITATION -> {
+                if (currentState is MeditationDetailState.Success) {
+                    currentState.meditation.audioResId
+                } else {
+                    R.raw.listenmed1
+                }
+            }
         }
     }
 
@@ -187,7 +194,12 @@ class MeditationViewModel @Inject constructor(
                         context.packageName
                     )
                 ),
-                isCompleted = false
+                isCompleted = false,
+                audioResId = context.resources.getIdentifier(
+                    "listenmed$dayNum",
+                    "raw",
+                    context.packageName
+                )
             )
         } catch (e: Exception) {
             throw Exception("Error cargando textos: ${e.message}")
@@ -219,7 +231,8 @@ data class MeditationDetail(
     val rosaryText: String,
     val litaniesText: String,
     val finalPrayerText: String,
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
+    val audioResId: Int
 )
 
 enum class AudioType {

@@ -241,19 +241,22 @@ fun MeditationTitle(dayNum: Int) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colorResource(id = R.color.contrastColorApp))
+            .background(colorResource(id = R.color.backgroundColorApp))
     ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp),
             border = BorderStroke(0.4.dp, color = Color.Transparent),
-            elevation = CardDefaults.cardElevation(5.dp)
+            elevation = CardDefaults.cardElevation(5.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = colorResource(id = R.color.cardBackground)
+            )
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colorResource(id = R.color.contrastColorApp)),
+                    .background(colorResource(id = R.color.backgroundColorApp)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -274,7 +277,7 @@ private fun AudioControls(
     playbackState: PlaybackState,
     onAction: (AudioAction) -> Unit
 ) {
-    val iconColor = colorResource(id = R.color.backgroundColorApp)
+    val iconColor = colorResource(id = R.color.textColorPrimary)
 
     Row(
         modifier = Modifier
@@ -358,7 +361,7 @@ private fun ExpandableSection(
             .padding(vertical = 4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
+            containerColor = colorResource(id = R.color.backgroundColorApp)
         )
     ) {
         // Header siempre visible
@@ -373,11 +376,12 @@ private fun ExpandableSection(
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = colorResource(id = R.color.textColorPrimary)
             )
             Icon(
                 imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                contentDescription = if (isExpanded) "Contraer" else "Expandir"
+                contentDescription = if (isExpanded) "Contraer" else "Expandir",
+                tint = colorResource(id = R.color.textColorPrimary)
             )
         }
 
@@ -428,7 +432,8 @@ private fun ExpandableSectionContent(
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = 8.dp),
+            color = colorResource(id = R.color.textColorSecondary)
         )
     }
 }
