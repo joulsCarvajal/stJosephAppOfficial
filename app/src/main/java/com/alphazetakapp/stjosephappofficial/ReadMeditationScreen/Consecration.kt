@@ -98,7 +98,10 @@ fun ExpandableMining(mining: String) {
             .padding(8.dp)
             .then(heightModifier),
         elevation = CardDefaults.cardElevation(),
-        shape = CardDefaults.elevatedShape
+        shape = CardDefaults.elevatedShape,
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.cardBackground)
+        )
     ) {
         Column(
             modifier = Modifier
@@ -112,12 +115,12 @@ fun ExpandableMining(mining: String) {
                 Icon(
                     imageVector = icon,
                     contentDescription = "Expand/Collapse",
-                    tint = Color.Black,
+                    tint = colorResource(id = R.color.textColorPrimary),
                     modifier = Modifier.size(24.dp)
                 )
                 Text(
                     text = if (isExpanded) text else text.take(33), // Mostrar solo una parte del texto cuando está contraído
-                    color = Color.Black,
+                    color = colorResource(id = R.color.textColorPrimary),
                     modifier = Modifier
                         .padding(vertical = 8.dp)
                         .padding(end = 8.dp)

@@ -79,7 +79,7 @@ fun DaysScreen(
         Button(
             onClick = { showResetDialog = true },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF4A3000)  // Un marrón oscuro que combine con tu tema
+                containerColor = colorResource(id = R.color.cardBackground)
             ),
             modifier = Modifier
                 .fillMaxWidth()
@@ -88,9 +88,13 @@ fun DaysScreen(
             Icon(
                 imageVector = Icons.Default.Refresh,
                 contentDescription = "Reiniciar",
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = 8.dp),
+                tint = colorResource(id = R.color.textColorPrimary)
             )
-            Text("Reiniciar Treintena")
+            Text(
+                "Reiniciar Treintena",
+                color = colorResource(id = R.color.textColorPrimary)  // Color del texto
+            )
         }
 
         // Diálogo de confirmación
@@ -111,12 +115,18 @@ fun DaysScreen(
                             showResetDialog = false
                         }
                     ) {
-                        Text("Sí, reiniciar")
+                        Text(
+                            "Sí, reiniciar",
+                            color = colorResource(id = R.color.textColorPrimary)
+                        )
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { showResetDialog = false }) {
-                        Text("Cancelar")
+                        Text(
+                            "Cancelar",
+                            color = colorResource(id = R.color.textColorPrimary)
+                            )
                     }
                 }
             )
@@ -173,9 +183,9 @@ private fun MeditationDayCard(
     onClick: () -> Unit
 ) {
     val backColor = if (meditation.isCompleted) {
-        colorResource(id = R.color.backgroundColorApp).copy(alpha = 0.7f)
+        colorResource(id = R.color.cardBackground).copy(alpha = 0.7f)
     } else {
-        colorResource(id = R.color.backgroundColorApp)
+        colorResource(id = R.color.cardBackground)
     }
 
     val iconState = when {
