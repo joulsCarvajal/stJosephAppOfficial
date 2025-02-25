@@ -43,7 +43,6 @@ object AppModule {
         )
     }
 
-    // Si tienes UseCases, también necesitarás sus providers
     @Provides
     @Singleton
     fun provideGetMeditationsUseCase(repository: MeditationRepository): GetMeditationsUseCase {
@@ -52,19 +51,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetLastCompletedDayUseCase(repository: MeditationRepository): GetLastCompletedDayUseCase {
-        return GetLastCompletedDayUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
     fun provideSetDayCompletedUseCase(repository: MeditationRepository): SetDayCompletedUseCase {
         return SetDayCompletedUseCase(repository)
     }
-
-//    @Provides
-//    @Singleton
-//    fun provideSetDayCompletedUseCase(repository: MeditationRepository): SetDayCompletedUseCase {
-//        return SetDayCompletedUseCase(//repository)
-//    }
 }

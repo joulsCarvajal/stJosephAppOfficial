@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -104,7 +103,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.50")
 
     // Para usar Hilt con Navigation Compose
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // Si usas WorkManager con Hilt
     implementation("androidx.hilt:hilt-work:1.2.0")

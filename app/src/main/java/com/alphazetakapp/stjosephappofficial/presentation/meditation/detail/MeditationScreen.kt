@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -61,6 +62,7 @@ import com.alphazetakapp.stjosephappofficial.ReadMeditationScreen.ExpandableText
 import com.alphazetakapp.stjosephappofficial.ReadMeditationScreen.ExpandableTextRosary
 import com.alphazetakapp.stjosephappofficial.presentation.common.ErrorMessage
 import com.alphazetakapp.stjosephappofficial.presentation.common.LoadingIndicator
+import com.alphazetakapp.stjosephappofficial.presentation.common.ResponsiveLayout
 import com.alphazetakapp.stjosephappofficial.ui.BannerApp
 import kotlin.math.max
 
@@ -68,8 +70,6 @@ import kotlin.math.max
 @Composable
 fun MeditationScreen(
     dayNum: Int,
-//    day: String,
-//    dailyRecord: Int,
     viewModel: MeditationViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -79,36 +79,116 @@ fun MeditationScreen(
         viewModel.loadMeditationData(dayNum)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.backgroundColorApp))
-            .padding(12.dp)
-    ) {
-        when (uiState) {
-            is MeditationDetailState.Loading -> {
-                LoadingIndicator()
-            }
-
-            is MeditationDetailState.Error -> {
-                ErrorMessage(message = (uiState as MeditationDetailState.Error).message)
-            }
-
-            is MeditationDetailState.Success -> {
-                val meditationState = uiState as MeditationDetailState.Success
-                MeditationContent(
-                    meditation = meditationState.meditation,
-                    playbackStates = playbackStates,
-                    onAudioAction = { audioType, action ->
-                        viewModel.handleAudioAction(audioType, action)
-                    },
-                    onCompletionToggle = { isCompleted ->
-                        viewModel.toggleDayCompletion(dayNum, isCompleted)
+    ResponsiveLayout(
+        content = {
+            // Diseño para móviles
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(colorResource(id = R.color.backgroundColorApp))
+            ) {
+                when (uiState) {
+                    is MeditationDetailState.Loading -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            LoadingIndicator()
+                        }
                     }
-                )
+                    is MeditationDetailState.Error -> {
+                        ErrorMessage(message = (uiState as MeditationDetailState.Error).message)
+                    }
+                    is MeditationDetailState.Success -> {
+                        val meditationState = uiState as MeditationDetailState.Success
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                        ) {
+                            BannerApp(
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            )
+                            
+                            MeditationTitle(dayNum = dayNum)
+                            
+                            MeditationContent(
+                                meditation = meditationState.meditation,
+                                playbackStates = playbackStates,
+                                onAudioAction = { audioType, action ->
+                                    viewModel.handleAudioAction(audioType, action)
+                                },
+                                onCompletionToggle = { isCompleted ->
+                                    viewModel.toggleDayCompletion(dayNum, isCompleted)
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        tabletContent = {
+            // Diseño para tablets
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(colorResource(id = R.color.backgroundColorApp))
+            ) {
+                when (uiState) {
+                    is MeditationDetailState.Loading -> {
+                        LoadingIndicator()
+                    }
+                    is MeditationDetailState.Error -> {
+                        ErrorMessage(message = (uiState as MeditationDetailState.Error).message)
+                    }
+                    is MeditationDetailState.Success -> {
+                        val meditationState = uiState as MeditationDetailState.Success
+                        Row(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp)
+                        ) {
+                            // Panel izquierdo
+                            Column(
+                                modifier = Modifier
+                                    .weight(0.4f)
+                                    .padding(end = 16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                MeditationTitle(dayNum)
+                                Spacer(modifier = Modifier.height(16.dp))
+                                BannerApp()
+                                AudioControls(
+                                    playbackState = playbackStates[AudioType.ROSARY] ?: PlaybackState(),
+                                    onAction = { action -> 
+                                        viewModel.handleAudioAction(AudioType.ROSARY, action) 
+                                    }
+                                )
+                            }
+                            
+                            // Panel derecho
+                            Column(
+                                modifier = Modifier
+                                    .weight(0.6f)
+                                    .verticalScroll(rememberScrollState())
+                            ) {
+                                MeditationContent(
+                                    meditation = meditationState.meditation,
+                                    playbackStates = playbackStates,
+                                    onAudioAction = { audioType, action ->
+                                        viewModel.handleAudioAction(audioType, action)
+                                    },
+                                    onCompletionToggle = { isCompleted ->
+                                        viewModel.toggleDayCompletion(dayNum, isCompleted)
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
+    )
 }
 
 @Composable
@@ -120,18 +200,10 @@ private fun MeditationContent(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(16.dp)
     ) {
-        // Banner
-        BannerApp()
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Título
-        MeditationTitle(dayNum = meditation.dayNum)
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Rosario
+        // Secciones expandibles
         ExpandableSection(
             title = "Rosario a San José",
             content = {
@@ -145,7 +217,8 @@ private fun MeditationContent(
             }
         )
 
-        // Letanías
+        Spacer(modifier = Modifier.height(8.dp))
+
         ExpandableSection(
             title = "Letanías",
             content = {
@@ -159,7 +232,8 @@ private fun MeditationContent(
             }
         )
 
-        // Meditación del día
+        Spacer(modifier = Modifier.height(8.dp))
+
         ExpandableSection(
             title = "Meditación Día ${meditation.dayNum}",
             content = {
@@ -173,7 +247,8 @@ private fun MeditationContent(
             }
         )
 
-        // Oración Final
+        Spacer(modifier = Modifier.height(8.dp))
+
         ExpandableSection(
             title = "Oración Final",
             content = {
@@ -187,7 +262,8 @@ private fun MeditationContent(
             }
         )
 
-        // Completado
+        Spacer(modifier = Modifier.height(16.dp))
+
         CompletionSwitch(
             isCompleted = meditation.isCompleted,
             dayNum = meditation.dayNum,
@@ -356,7 +432,6 @@ private fun AudioControls(
         }
     }
 }
-
 
 @Composable
 private fun ExpandableSection(

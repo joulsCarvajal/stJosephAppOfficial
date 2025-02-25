@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.alphazetakapp.stjosephappofficial.R
+import com.alphazetakapp.stjosephappofficial.presentation.common.ResponsiveLayout
 import com.alphazetakapp.stjosephappofficial.presentation.navigation.Screen
 
 @Composable
@@ -65,59 +66,98 @@ fun WelcomeScreen(navController: NavController, viewModel: WelcomeViewModel = hi
         fontFamily = FontFamily.Default
     )
 
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(backColor)
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = title,
-            color = Color.White,
-            textAlign = TextAlign.Center,
-            style = textStyleTitleDos
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Box(
-            modifier = Modifier
-                .height(400.dp)
-                .background(backColor)
-                .padding(4.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Text(
-                text = textWithStyles,
+    ResponsiveLayout(
+        content = {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .background(backColor)
                     .padding(16.dp),
-                textAlign = TextAlign.Center,
-                color = Color.White
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(backColor)
-                .padding(4.dp),
-            contentAlignment = Alignment.BottomEnd
-        ) {
-            Row {
-                Button(
-                    onClick = { navController.navigate(Screen.Preparation.route) },
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = title,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    style = textStyleTitleDos
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Box(
                     modifier = Modifier
-                        .size(70.dp)
-                        .clip(CircleShape),
-                    colors = ButtonDefaults.buttonColors(
-                        Color(0xFFF2A71B),
-                        contentColor = Color.Black
-                    )
+                        .height(400.dp)
+                        .background(backColor)
+                        .padding(4.dp)
+                        .verticalScroll(rememberScrollState())
                 ) {
-                    Icon(imageVector = Icons.Outlined.ArrowForward, contentDescription = "Next")
+                    Text(
+                        text = textWithStyles,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center,
+                        color = Color.White
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(backColor)
+                        .padding(4.dp),
+                    contentAlignment = Alignment.BottomEnd
+                ) {
+                    Row {
+                        Button(
+                            onClick = { navController.navigate(Screen.Preparation.route) },
+                            modifier = Modifier
+                                .size(70.dp)
+                                .clip(CircleShape),
+                            colors = ButtonDefaults.buttonColors(
+                                Color(0xFFF2A71B),
+                                contentColor = Color.Black
+                            )
+                        ) {
+                            Icon(imageVector = Icons.Outlined.ArrowForward, contentDescription = "Next")
+                        }
+                    }
+                }
+            }
+        },
+        tabletContent = {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(backColor)
+                    .padding(24.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = title,
+                        style = textStyleTitleDos,
+                        color = Color.White,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                }
+                
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Text(
+                        text = textWithStyles,
+                        color = Color.White,
+                        textAlign = TextAlign.Start
+                    )
                 }
             }
         }
-    }
+    )
 }
