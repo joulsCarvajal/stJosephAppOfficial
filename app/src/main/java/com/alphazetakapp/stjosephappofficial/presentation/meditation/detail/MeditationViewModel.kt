@@ -23,7 +23,7 @@ import javax.inject.Inject
 class MeditationViewModel @Inject constructor(
     private val storeEndDay: StoreEndDay,
     @ApplicationContext private val context: Context,
-    private val getMeditationUseCase: GetMeditationsUseCase,
+    private val getMeditationsUseCase: GetMeditationsUseCase,
     private val setDayCompletedUseCase: SetDayCompletedUseCase
 ): ViewModel() {
 
@@ -38,18 +38,15 @@ class MeditationViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.value = MeditationDetailState.Loading
-
-                val meditation = loadTexts(dayNum)
-
+                
+                // Combinamos la carga de meditación con el estado de completado
                 combine(
-                    flowOf(meditation),
+                    flowOf(loadTexts(dayNum)),
                     storeEndDay.getSwitchStateForDay(dayNum)
                 ) { meditationDetail, isCompleted ->
-                    MeditationDetailState.Success(
-                        meditation = meditationDetail.copy(isCompleted = isCompleted)
-                    )
-                }.collect { state ->
-                    _uiState.value = state
+                    meditationDetail.copy(isCompleted = isCompleted)
+                }.collect { meditation ->
+                    _uiState.value = MeditationDetailState.Success(meditation)
                 }
             } catch (e: Exception) {
                 _uiState.value = MeditationDetailState.Error(e.message ?: "Error desconocido")

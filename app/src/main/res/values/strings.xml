@@ -1,3 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">stjosephappofficial</string>
+
+    <!-- Pantalla de Preparación -->
+    <string name="title_preparation_screen">✨ Preparación para la Treintena ✨</string>
+    <string name="preparation_screen_text">La Treintena a San José es una devoción que se realiza durante 30 días consecutivos.\n\n🌟 Antes de comenzar, es importante tener en cuenta:\n\n📝 1. Dedica un tiempo específico cada día para la meditación.\n\n🏡 2. Busca un lugar tranquilo donde puedas rezar sin distracciones.\n\n🙏 3. Ten una actitud de apertura y confianza en la intercesión de San José.\n\n🖼️ 4. Si es posible, mantén una imagen o estampa de San José cerca durante tu oración.\n\n🎧 5. Puedes usar los audios incluidos para guiarte en cada meditación.\n\n✨ Cada día incluye:\n\n📿 • Rosario a San José\n📜 • Letanías\n📖 • Meditación del día\n🕊️ • Oración final\n\n¿Estás listo para comenzar esta hermosa devoción a San José? 👨‍👦✝️</string>
 </resources>

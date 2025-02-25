@@ -3,6 +3,7 @@ package com.alphazetakapp.stjosephappofficial.presentation.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -17,12 +18,15 @@ import com.alphazetakapp.stjosephappofficial.presentation.welcome.WelcomeScreen
 
 @RequiresApi(Build.VERSION_CODES.M)
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    modifier: Modifier = Modifier
+) {
     val navigationController = rememberNavController()
 
     NavHost(
         navController = navigationController,
-        startDestination = Screen.Welcome.route
+        startDestination = Screen.Welcome.route,
+        modifier = modifier
     ) {
         composable(Screen.Welcome.route) {
             WelcomeScreen(navigationController, viewModel = hiltViewModel())

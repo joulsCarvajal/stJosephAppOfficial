@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lock
@@ -57,6 +58,7 @@ import com.alphazetakapp.stjosephappofficial.domain.model.Meditation
 import com.alphazetakapp.stjosephappofficial.presentation.common.ErrorMessage
 import com.alphazetakapp.stjosephappofficial.presentation.common.LoadingIndicator
 import com.alphazetakapp.stjosephappofficial.presentation.navigation.Screen
+import com.alphazetakapp.stjosephappofficial.presentation.common.ResponsiveLayout
 
 @Composable
 fun DaysScreen(
@@ -67,94 +69,178 @@ fun DaysScreen(
     val selectedDay by viewModel.selectedDay.collectAsState()
     var showResetDialog by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFC2932A))
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        Button(
-            onClick = { showResetDialog = true },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(id = R.color.cardBackground)
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Refresh,
-                contentDescription = "Reiniciar",
-                modifier = Modifier.padding(end = 8.dp),
-                tint = colorResource(id = R.color.textColorPrimary)
-            )
-            Text(
-                "Reiniciar Treintena",
-                color = colorResource(id = R.color.textColorPrimary)  // Color del texto
-            )
-        }
-
-        // Diálogo de confirmación
-        if (showResetDialog) {
-            AlertDialog(
-                onDismissRequest = { showResetDialog = false },
-                title = { Text("Reiniciar Treintena") },
-                text = {
-                    Text(
-                        "¿Estás seguro de que deseas reiniciar la Treintena? " +
-                                "Esto desmarcará todos los días completados."
+    ResponsiveLayout(
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFFC2932A))
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    onClick = { showResetDialog = true },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.cardBackground)
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "Reiniciar",
+                        modifier = Modifier.padding(end = 8.dp),
+                        tint = colorResource(id = R.color.textColorPrimary)
                     )
-                },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            viewModel.resetAllDays()
-                            showResetDialog = false
+                    Text(
+                        "Reiniciar Treintena",
+                        color = colorResource(id = R.color.textColorPrimary)  // Color del texto
+                    )
+                }
+
+                // Diálogo de confirmación
+                if (showResetDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showResetDialog = false },
+                        title = { Text("Reiniciar Treintena") },
+                        text = {
+                            Text(
+                                "¿Estás seguro de que deseas reiniciar la Treintena? " +
+                                        "Esto desmarcará todos los días completados."
+                            )
+                        },
+                        confirmButton = {
+                            Button(
+                                onClick = {
+                                    viewModel.resetAllDays()
+                                    showResetDialog = false
+                                }
+                            ) {
+                                Text(
+                                    "Sí, reiniciar",
+                                    color = colorResource(id = R.color.textColorPrimary)
+                                )
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showResetDialog = false }) {
+                                Text(
+                                    "Cancelar",
+                                    color = colorResource(id = R.color.textColorPrimary)
+                                )
+                            }
                         }
-                    ) {
-                        Text(
-                            "Sí, reiniciar",
-                            color = colorResource(id = R.color.textColorPrimary)
+                    )
+                }
+
+                when (uiState) {
+                    is DaysUiState.Loading -> LoadingIndicator()
+                    is DaysUiState.Error -> ErrorMessage((uiState as DaysUiState.Error).message)
+                    is DaysUiState.Success -> {
+                        MeditationDaysList(
+                            meditations = (uiState as DaysUiState.Success).meditations,
+                            selectedDay = selectedDay,
+                            onDaySelected = { meditation ->
+                                viewModel.onDaySelected(meditation.dayNum)
+                                navController.navigate(
+                                    Screen.MeditationNav.createRoute(
+                                        dayNum = meditation.dayNum,
+                                        day = meditation.day,
+                                        dailyRecord = meditation.dailyRecord ?: 0
+                                    )
+                                )
+                            }
                         )
                     }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showResetDialog = false }) {
-                        Text(
-                            "Cancelar",
-                            color = colorResource(id = R.color.textColorPrimary)
-                            )
-                    }
                 }
-            )
-        }
-
-            when (uiState) {
-                is DaysUiState.Loading -> LoadingIndicator()
-                is DaysUiState.Error -> ErrorMessage((uiState as DaysUiState.Error).message)
-                is DaysUiState.Success -> {
-                    MeditationDaysList(
-                        meditations = (uiState as DaysUiState.Success).meditations,
-                        selectedDay = selectedDay,
-                        onDaySelected = { meditation ->
-                            viewModel.onDaySelected(meditation.dayNum)
-                            navController.navigate(
-                                Screen.MeditationNav.createRoute(
-                                    dayNum = meditation.dayNum,
-                                    day = meditation.day,
-                                    dailyRecord = meditation.dailyRecord ?: 0
-                                )
+            }
+        },
+        tabletContent = {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFFC2932A))
+                    .padding(24.dp)
+            ) {
+                Button(
+                    onClick = { showResetDialog = true },
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(bottom = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "Reiniciar",
+                        modifier = Modifier.padding(end = 8.dp),
+                        tint = colorResource(id = R.color.textColorPrimary)
+                    )
+                    Text(
+                        "Reiniciar Treintena",
+                        color = colorResource(id = R.color.textColorPrimary)  // Color del texto
+                    )
+                }
+                
+                // Diálogo de confirmación
+                if (showResetDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showResetDialog = false },
+                        title = { Text("Reiniciar Treintena") },
+                        text = {
+                            Text(
+                                "¿Estás seguro de que deseas reiniciar la Treintena? " +
+                                        "Esto desmarcará todos los días completados."
                             )
+                        },
+                        confirmButton = {
+                            Button(
+                                onClick = {
+                                    viewModel.resetAllDays()
+                                    showResetDialog = false
+                                }
+                            ) {
+                                Text(
+                                    "Sí, reiniciar",
+                                    color = colorResource(id = R.color.textColorPrimary)
+                                )
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showResetDialog = false }) {
+                                Text(
+                                    "Cancelar",
+                                    color = colorResource(id = R.color.textColorPrimary)
+                                )
+                            }
                         }
                     )
                 }
-            }
-    }
-}
 
+                when (uiState) {
+                    is DaysUiState.Loading -> LoadingIndicator()
+                    is DaysUiState.Error -> ErrorMessage((uiState as DaysUiState.Error).message)
+                    is DaysUiState.Success -> {
+                        MeditationDaysList(
+                            meditations = (uiState as DaysUiState.Success).meditations,
+                            selectedDay = selectedDay,
+                            onDaySelected = { meditation ->
+                                viewModel.onDaySelected(meditation.dayNum)
+                                navController.navigate(
+                                    Screen.MeditationNav.createRoute(
+                                        dayNum = meditation.dayNum,
+                                        day = meditation.day,
+                                        dailyRecord = meditation.dailyRecord ?: 0
+                                    )
+                                )
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    )
+}
 
 @Composable
 private fun MeditationDaysList(
