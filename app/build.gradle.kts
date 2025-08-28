@@ -12,9 +12,9 @@ android {
     defaultConfig {
         applicationId = "com.alphazetakapp.stjosephappofficial"
         minSdk = 22
-        targetSdk = 34
-        versionCode = 13
-        versionName = "1.0.13"
+        targetSdk = 36
+        versionCode = 14
+        versionName = "1.0.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
