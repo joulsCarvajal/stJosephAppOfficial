@@ -15,3 +15,10 @@
 local.properties
 .idea/gradle.xml
 .idea/misc.xml
+
+# Archivos de release
+*.aab
+*.apk
+
+# Configuraciones específicas de IDE
+.idea/deviceManager.xml
