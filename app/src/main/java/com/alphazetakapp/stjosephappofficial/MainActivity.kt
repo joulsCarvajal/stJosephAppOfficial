@@ -25,6 +25,9 @@ class MainActivity : ComponentActivity() {
         // Actualización del manejo de insets del sistema
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        // Manejar navegación desde notificaciones
+        handleNotificationNavigation(intent)
+
         //Este sería el tema de arranque
         enableEdgeToEdge()
         setContent {
@@ -37,6 +40,20 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
+        }
+    }
+
+    override fun onNewIntent(intent: android.content.Intent?) {
+        super.onNewIntent(intent)
+        intent?.let { handleNotificationNavigation(it) }
+    }
+
+    private fun handleNotificationNavigation(intent: android.content.Intent) {
+        val navigateToDay = intent.getIntExtra("navigate_to_day", -1)
+        if (navigateToDay > 0) {
+            // Aquí puedes agregar lógica para navegar directamente a un día específico
+            // Por ejemplo, usando un ViewModel compartido o pasando parámetros
+            println("Navegar al día: $navigateToDay")
         }
     }
 }

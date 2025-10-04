@@ -9,4 +9,5 @@ sealed class Screen(val route: String) {
             "meditation_screen?day=$day&dayNum=$dayNum&dailyRecord=$dailyRecord"
     }
     object TheNew : Screen("the_new_screen")
+    object NotificationSettings : Screen("notification_settings")
 }
