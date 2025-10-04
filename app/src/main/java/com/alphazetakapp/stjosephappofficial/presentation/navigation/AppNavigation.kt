@@ -14,6 +14,7 @@ import com.alphazetakapp.stjosephappofficial.ReadMeditationScreen.TheNewScreen
 import com.alphazetakapp.stjosephappofficial.presentation.meditation.detail.MeditationScreen
 import com.alphazetakapp.stjosephappofficial.presentation.meditation.list.DaysScreen
 import com.alphazetakapp.stjosephappofficial.presentation.preparation.PrepScreen
+import com.alphazetakapp.stjosephappofficial.presentation.settings.NotificationSettingsScreen
 import com.alphazetakapp.stjosephappofficial.presentation.welcome.WelcomeScreen
 
 @RequiresApi(Build.VERSION_CODES.M)
@@ -60,6 +61,9 @@ fun AppNavigation(
                     viewModel = hiltViewModel()
                 )
             }
+        }
+        composable(Screen.NotificationSettings.route) {
+            NotificationSettingsScreen()
         }
     }
 }

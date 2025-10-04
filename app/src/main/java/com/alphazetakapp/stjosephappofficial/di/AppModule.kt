@@ -8,6 +8,7 @@ import com.alphazetakapp.stjosephappofficial.domain.repository.MeditationReposit
 import com.alphazetakapp.stjosephappofficial.domain.usecase.GetLastCompletedDayUseCase
 import com.alphazetakapp.stjosephappofficial.domain.usecase.GetMeditationsUseCase
 import com.alphazetakapp.stjosephappofficial.domain.usecase.SetDayCompletedUseCase
+import com.alphazetakapp.stjosephappofficial.notification.NotificationRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,5 +54,11 @@ object AppModule {
     @Singleton
     fun provideSetDayCompletedUseCase(repository: MeditationRepository): SetDayCompletedUseCase {
         return SetDayCompletedUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationRepository(@ApplicationContext context: Context): NotificationRepository {
+        return NotificationRepository(context)
     }
 }
