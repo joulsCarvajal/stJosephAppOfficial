@@ -91,7 +91,7 @@ jobs:
         groups: ${{ steps.build.outputs.testers-group }}
         file: ${{ steps.build.outputs.apk-path }}
         releaseNotes: |
-          🚀 Release Manual - ${{ github.event.inputs.environment | upper }}
+          🚀 Release Manual - ${{ github.event.inputs.environment }}
           📱 Devocionario San José v${{ github.event.inputs.version }}
           🔄 Commit: ${{ github.sha }}
           👤 Autor: ${{ github.actor }}
