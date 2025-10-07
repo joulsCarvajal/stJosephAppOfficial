@@ -22,3 +22,23 @@ local.properties
 
 # Configuraciones específicas de IDE
 .idea/deviceManager.xml
+
+# Keystore y configuración local
+keystore.jks
+keystore.jks.backup
+*.keystore
+local.properties
+
+# Archivos de configuración CI/CD
+firebase-service-account.json
+google-services-debug.json
+google-services-release.json
+
+# Archivos temporales de build
+build/
+.gradle/
+captures/
+
+# Archivos de configuración local
+.env
+.env.local
