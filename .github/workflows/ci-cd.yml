@@ -47,7 +47,7 @@ jobs:
         echo "apk-path=app/build/outputs/apk/dev/debug/app-dev-debug.apk" >> $GITHUB_OUTPUT
         
     - name: Upload APK artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dev-apk
         path: ${{ steps.build.outputs.apk-path }}
@@ -114,7 +114,7 @@ jobs:
         echo "aab-path=app/build/outputs/bundle/devRelease/app-dev-release.aab" >> $GITHUB_OUTPUT
         
     - name: Upload AAB artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: qa-aab
         path: ${{ steps.build.outputs.aab-path }}
@@ -182,7 +182,7 @@ jobs:
         echo "aab-path=app/build/outputs/bundle/prodRelease/app-prod-release.aab" >> $GITHUB_OUTPUT
         
     - name: Upload AAB artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: prod-aab
         path: ${{ steps.build.outputs.aab-path }}
@@ -202,12 +202,12 @@ jobs:
           📋 Versión: ${{ github.ref_name }}
           
     - name: Create GitHub Release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: v${{ github.run_number }}
-        release_name: Release v${{ github.run_number }}
+        name: Release v${{ github.run_number }}
         body: |
           🎉 Nueva versión de Devocionario San José
           
@@ -252,7 +252,7 @@ jobs:
       run: ./gradlew lintDevDebug
       
     - name: Upload Lint Results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: lint-results
