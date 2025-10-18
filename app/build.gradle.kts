@@ -109,6 +109,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
 
     // Para usar Hilt con Navigation Compose
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")

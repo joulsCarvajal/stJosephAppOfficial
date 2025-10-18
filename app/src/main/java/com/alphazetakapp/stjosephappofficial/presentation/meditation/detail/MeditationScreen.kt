@@ -74,6 +74,7 @@ fun MeditationScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val playbackStates by viewModel.playbackStates.collectAsState()
+    val downloadStates by viewModel.downloadStates.collectAsState()
 
     LaunchedEffect(dayNum) {
         viewModel.loadMeditationData(dayNum)
@@ -115,6 +116,7 @@ fun MeditationScreen(
                             MeditationContent(
                                 meditation = meditationState.meditation,
                                 playbackStates = playbackStates,
+                                downloadStates = downloadStates,
                                 onAudioAction = { audioType, action ->
                                     viewModel.handleAudioAction(audioType, action)
                                 },
@@ -160,6 +162,7 @@ fun MeditationScreen(
                                 BannerApp()
                                 AudioControls(
                                     playbackState = playbackStates[AudioType.ROSARY] ?: PlaybackState(),
+                                    downloadState = downloadStates[AudioType.ROSARY],
                                     onAction = { action -> 
                                         viewModel.handleAudioAction(AudioType.ROSARY, action) 
                                     }
@@ -175,6 +178,7 @@ fun MeditationScreen(
                                 MeditationContent(
                                     meditation = meditationState.meditation,
                                     playbackStates = playbackStates,
+                                    downloadStates = downloadStates,
                                     onAudioAction = { audioType, action ->
                                         viewModel.handleAudioAction(audioType, action)
                                     },
@@ -195,6 +199,7 @@ fun MeditationScreen(
 private fun MeditationContent(
     meditation: MeditationDetail,
     playbackStates: Map<AudioType, PlaybackState>,
+    downloadStates: Map<AudioType, DownloadState>,
     onAudioAction: (AudioType, AudioAction) -> Unit,
     onCompletionToggle: (Boolean) -> Unit
 ) {
@@ -212,6 +217,7 @@ private fun MeditationContent(
             audioControl = {
                 AudioControls(
                     playbackState = playbackStates[AudioType.ROSARY] ?: PlaybackState(),
+                    downloadState = downloadStates[AudioType.ROSARY],
                     onAction = { action -> onAudioAction(AudioType.ROSARY, action) }
                 )
             }
@@ -227,6 +233,7 @@ private fun MeditationContent(
             audioControl = {
                 AudioControls(
                     playbackState = playbackStates[AudioType.LITANIES] ?: PlaybackState(),
+                    downloadState = downloadStates[AudioType.LITANIES],
                     onAction = { action -> onAudioAction(AudioType.LITANIES, action) }
                 )
             }
@@ -242,6 +249,7 @@ private fun MeditationContent(
             audioControl = {
                 AudioControls(
                     playbackState = playbackStates[AudioType.DAILY_MEDITATION] ?: PlaybackState(),
+                    downloadState = downloadStates[AudioType.DAILY_MEDITATION],
                     onAction = { action -> onAudioAction(AudioType.DAILY_MEDITATION, action) }
                 )
             }
@@ -257,6 +265,7 @@ private fun MeditationContent(
             audioControl = {
                 AudioControls(
                     playbackState = playbackStates[AudioType.FINAL_PRAY] ?: PlaybackState(),
+                    downloadState = downloadStates[AudioType.FINAL_PRAY],
                     onAction = { action -> onAudioAction(AudioType.FINAL_PRAY, action) }
                 )
             }
@@ -362,6 +371,7 @@ fun MeditationTitle(dayNum: Int) {
 @Composable
 private fun AudioControls(
     playbackState: PlaybackState,
+    downloadState: DownloadState?,
     onAction: (AudioAction) -> Unit
 ) {
     val iconColor = colorResource(id = R.color.textColorPrimary)
@@ -373,6 +383,42 @@ private fun AudioControls(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // Indicador de estado de descarga
+        when (downloadState) {
+            is DownloadState.Downloading -> {
+                Text(
+                    text = "Descargando...",
+                    color = Color.Yellow,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
+            is DownloadState.Error -> {
+                Text(
+                    text = "Error: ${downloadState.message}",
+                    color = Color.Red,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
+            is DownloadState.Downloaded -> {
+                Text(
+                    text = "✓ Listo",
+                    color = Color.Green,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
+            null -> {
+                Text(
+                    text = "Preparando...",
+                    color = Color.Gray,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
+        }
+        
         // Play/Pause
         IconButton(
             onClick = {
@@ -381,24 +427,28 @@ private fun AudioControls(
                 } else {
                     onAction(AudioAction.Play)
                 }
-            }
+            },
+            enabled = downloadState is DownloadState.Downloaded
         ) {
             Icon(
                 painter = painterResource(
                     id = if (playbackState.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
                 ),
                 contentDescription = if (playbackState.isPlaying) "Pausar" else "Reproducir",
-                tint = iconColor,
+                tint = if (downloadState is DownloadState.Downloaded) iconColor else Color.Gray,
                 modifier = Modifier.size(24.dp)
             )
         }
 
         // Stop
-        IconButton(onClick = { onAction(AudioAction.Stop) }) {
+        IconButton(
+            onClick = { onAction(AudioAction.Stop) },
+            enabled = downloadState is DownloadState.Downloaded
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_stop),
                 contentDescription = "Detener",
-                tint = iconColor,
+                tint = if (downloadState is DownloadState.Downloaded) iconColor else Color.Gray,
                 modifier = Modifier.size(24.dp)
             )
         }
@@ -407,12 +457,13 @@ private fun AudioControls(
         IconButton(
             onClick = {
                 onAction(AudioAction.ChangeSpeed(playbackState.speed + 0.25f))
-            }
+            },
+            enabled = downloadState is DownloadState.Downloaded
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.rapido),
                 contentDescription = "Aumentar velocidad",
-                tint = iconColor,
+                tint = if (downloadState is DownloadState.Downloaded) iconColor else Color.Gray,
                 modifier = Modifier.size(24.dp)
             )
         }
@@ -421,12 +472,13 @@ private fun AudioControls(
         IconButton(
             onClick = {
                 onAction(AudioAction.ChangeSpeed(max(0.25f, playbackState.speed - 0.25f)))
-            }
+            },
+            enabled = downloadState is DownloadState.Downloaded
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.lento_menos),
                 contentDescription = "Reducir velocidad",
-                tint = iconColor,
+                tint = if (downloadState is DownloadState.Downloaded) iconColor else Color.Gray,
                 modifier = Modifier.size(24.dp)
             )
         }
