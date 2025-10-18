@@ -278,7 +278,7 @@ fun PlayAudioRosary(context: Context) {
     var playbackSpeed by remember { mutableStateOf(1.0f) }
 
     DisposableEffect(Unit) {
-        mp = MediaPlayer.create(context, R.raw.rosariosanjose)
+        // mp = MediaPlayer.create(context, R.raw.rosariosanjose) // Ya no se usa - se obtiene desde Firebase
 
         onDispose {
             mp?.release()
@@ -381,7 +381,7 @@ fun PlayAudioLitanies(context: Context) {
     var playbackSpeed by remember { mutableStateOf(1.0f) } // Inicialmente, la velocidad de reproducción es 1.0x (normal)
 
     DisposableEffect(Unit) {
-        mp = MediaPlayer.create(context, R.raw.letanias)
+        // mp = MediaPlayer.create(context, R.raw.letanias) // Ya no se usa - se obtiene desde Firebase
 
         onDispose {
             mp?.release()
@@ -595,7 +595,7 @@ fun PlayAudioFinalPray(context: Context) {
     var playbackSpeed by remember { mutableStateOf(1.0f) }
 
     DisposableEffect(Unit) {
-        mp = MediaPlayer.create(context, R.raw.oracionfinal)
+        // mp = MediaPlayer.create(context, R.raw.oracionfinal) // Ya no se usa - se obtiene desde Firebase
 
         onDispose {
             mp?.release()
