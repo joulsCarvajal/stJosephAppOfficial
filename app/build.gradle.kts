@@ -15,8 +15,8 @@ android {
         applicationId = "com.alphazetakapp.stjosephappofficial"
         minSdk = 22
         targetSdk = 36
-        versionCode = 17
-        versionName = "1.0.17"
+        versionCode = 18
+        versionName = "1.0.18"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -109,6 +109,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
 
     // Para usar Hilt con Navigation Compose
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")

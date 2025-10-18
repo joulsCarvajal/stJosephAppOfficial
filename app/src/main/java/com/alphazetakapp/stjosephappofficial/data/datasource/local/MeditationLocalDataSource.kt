@@ -12,7 +12,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 1",
                 meditationDay = "APROVECHA ESTE DÍA PARA QUE ENTREGUES A JESÚS TUS CARGAS, TUS PROBLEMAS Y TUS ENFERMEDADES",
                 imageResId = R.drawable.day1,
-                audioResId = R.raw.listenmed1,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebase
                 isConsecration = false
             ),
             MeditationDto(
@@ -20,7 +20,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 2",
                 meditationDay = "EN ESTE DÍA ENTRÉGAME TUS AFLICCIONES, QUIERO SER CONSUELO EN TUS PENAS",
                 imageResId = R.drawable.day2,
-                audioResId = R.raw.listenmed2,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebase
                 isConsecration = false
             ),
             MeditationDto(
@@ -28,7 +28,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 3",
                 meditationDay = "EN ESTE DÍA QUIERO DECIRTE QUE EN MI CARPINTERÍA SIEMPRE ENCONTRARÁS LA PAZ",
                 imageResId = R.drawable.day3,
-                audioResId = R.raw.listenmed3,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed3,
                 isConsecration = false
             ),
             MeditationDto(
@@ -36,7 +36,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 4",
                 meditationDay = "EN ESTE DÍA ENTRÉGAME TUS AFLICCIONES, ALGO HARE POR TI",
                 imageResId = R.drawable.day4,
-                audioResId = R.raw.listenmed4,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed4,
                 isConsecration = false
             ),
             MeditationDto(
@@ -44,7 +44,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 5",
                 meditationDay = "EN ESTE DÍA ENTRÉGAME TUS DIFICULTADES",
                 imageResId = R.drawable.day5,
-                audioResId = R.raw.listenmed5,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed5,
                 isConsecration = false
             ),
             MeditationDto(
@@ -52,7 +52,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 6",
                 meditationDay = "EN ESTE DÍA ENTRÉGAME TODAS LAS SITUACIONES QUE TE INTRAQUILIZAN",
                 imageResId = R.drawable.day6,
-                audioResId = R.raw.listenmed6,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed6,
                 isConsecration = false
             ),
             MeditationDto(
@@ -60,7 +60,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 7",
                 meditationDay = "EN ESTE DÍA ENTRÉGAME DE NUEVO LAS INTENCIONES DE TU CORAZÓN",
                 imageResId = R.drawable.day7,
-                audioResId = R.raw.listenmed7,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed7,
                 isConsecration = false
             ),
             MeditationDto(
@@ -68,7 +68,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 8",
                 meditationDay = "ESPERO QUE EN ESTE DÍA SIENTAS TU CARGA MÁS LIVIANA",
                 imageResId = R.drawable.day8,
-                audioResId = R.raw.listenmed8,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed8,
                 isConsecration = false
             ),
             MeditationDto(
@@ -76,7 +76,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 9",
                 meditationDay = "EN ESTE DÍA HAS VENIDO A MI TALLER CON LA ILUSIÓN DE ENCONTRAR UNA SALIDA RÁPIDA A TUS PROBLEMAS",
                 imageResId = R.drawable.day9,
-                audioResId = R.raw.listenmed9,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed9,
                 isConsecration = false
             ),
             MeditationDto(
@@ -84,7 +84,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 10",
                 meditationDay = "EN ESTE DÍA QUIERO QUE MIS PALABRAS TE SIRVAN COMO ANTÍDOTO A TODOS TUS MALES",
                 imageResId = R.drawable.day10,
-                audioResId = R.raw.listenmed10,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed10,
                 isConsecration = false
             ),
             MeditationDto(
@@ -92,7 +92,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 11",
                 meditationDay = "CADA VEZ QUE VENGAS A MI CARPINTERÍA TE HARÉ VIVIR EXPERIENCIAS MARAVILLOSAS",
                 imageResId = R.drawable.day11,
-                audioResId = R.raw.listenmed11,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed11,
                 isConsecration = false
             ),
             MeditationDto(
@@ -100,7 +100,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 12",
                 meditationDay = "HOY TE LLAMO A PONER TU CONFIANZA SOLO EN DIOS",
                 imageResId = R.drawable.day12,
-                audioResId = R.raw.listenmed12,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed12,
                 isConsecration = false
             ),
             MeditationDto(
@@ -108,7 +108,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 13",
                 meditationDay = "NO DUDES EN VENIR A MI HUMILDE CARPINTERÍA",
                 imageResId = R.drawable.day13,
-                audioResId = R.raw.listenmed13,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed13,
                 isConsecration = false
             ),
             MeditationDto(
@@ -116,7 +116,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 14",
                 meditationDay = "¿QUE FAVOR ESPERAS A TRAVÉS DE MI INTERCESIÓN?",
                 imageResId = R.drawable.day14,
-                audioResId = R.raw.listenmed14,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed14,
                 isConsecration = false
             ),
             MeditationDto(
@@ -124,7 +124,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 15",
                 meditationDay = "ESPERO QUE CADA DÍA SIENTAS MÁS LA NECESIDAD DE ENCONTRARTE CONMIGO EN MI CARPINTERÍA",
                 imageResId = R.drawable.day15,
-                audioResId = R.raw.listenmed15,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed15,
                 isConsecration = false
             ),
             MeditationDto(
@@ -132,7 +132,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 16",
                 meditationDay = "EN ESTE DÍA PROPONTE VENCERTE A TI MISMO",
                 imageResId = R.drawable.day16,
-                audioResId = R.raw.listenmed16,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed16,
                 isConsecration = false
             ),
             MeditationDto(
@@ -140,7 +140,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 17",
                 meditationDay = "AQUÍ EN MI CARPINTERÍA, TOMAD LA DECISIÓN DE VIVIR EN DIOS Y PARA DIOS",
                 imageResId = R.drawable.day17,
-                audioResId = R.raw.listenmed17,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed17,
                 isConsecration = false
             ),
             MeditationDto(
@@ -148,7 +148,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 18",
                 meditationDay = "EN ESTE DÍA TOMO EN MIS MANOS LAS INTENCIONES DE TU ORACIÓN",
                 imageResId = R.drawable.day18,
-                audioResId = R.raw.listenmed18,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed18,
                 isConsecration = false
             ),
             MeditationDto(
@@ -156,7 +156,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 19",
                 meditationDay = "HOY CAMINA EN LA CERTEZA DE QUE TU ORACIÓN HA SIDO ESCUCHADA POR EL SEÑOR",
                 imageResId = R.drawable.day19,
-                audioResId = R.raw.listenmed19,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed19,
                 isConsecration = false
             ),
             MeditationDto(
@@ -164,7 +164,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 20",
                 meditationDay = "MI TALLER DEBE SER PARA TI LUGAR DE CONSOLACIÓN",
                 imageResId = R.drawable.day20,
-                audioResId = R.raw.listenmed20,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed20,
                 isConsecration = false
             ),
             MeditationDto(
@@ -172,7 +172,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 21",
                 meditationDay = "COMO PATRONO DE LA VIDA INTERIOR CUIDARÉ SIEMPRE DE TI",
                 imageResId = R.drawable.day21,
-                audioResId = R.raw.listenmed21,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed21,
                 isConsecration = false
             ),
             MeditationDto(
@@ -180,7 +180,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 22",
                 meditationDay = "EN MI TALLER PODRÁS VER REALIZADOS GRANDES MILAGROS",
                 imageResId = R.drawable.day22,
-                audioResId = R.raw.listenmed22,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed22,
                 isConsecration = false
             ),
             MeditationDto(
@@ -188,7 +188,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 23",
                 meditationDay = "SIEMPRE ASISTO A MIS DEVOTOS, NO LOS DEJO SOLOS EN SUS ANGUSTIAS",
                 imageResId = R.drawable.day23,
-                audioResId = R.raw.listenmed23,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed23,
                 isConsecration = false
             ),
             MeditationDto(
@@ -196,7 +196,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 24",
                 meditationDay = "EN ESTE DÍA QUIERO DEJAR EN TI UN BELLO RECUERDO",
                 imageResId = R.drawable.day24,
-                audioResId = R.raw.listenmed24,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed24,
                 isConsecration = false
             ),
             MeditationDto(
@@ -204,7 +204,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 25",
                 meditationDay = "¿QUÉ PUEDO HACER POR TI EN ESTE DÍA?",
                 imageResId = R.drawable.day25,
-                audioResId = R.raw.listenmed25,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed25,
                 isConsecration = false
             ),
             MeditationDto(
@@ -212,7 +212,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 26",
                 meditationDay = "NO TE DEJES PERTURBAR NI PIENSES MÁS EN LA DERROTA",
                 imageResId = R.drawable.day26,
-                audioResId = R.raw.listenmed26,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed26,
                 isConsecration = false
             ),
             MeditationDto(
@@ -220,7 +220,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 27",
                 meditationDay = "HOY DIME QUE SIENTES LA NECESIDAD DE CAMBIAR EN TU VIDA",
                 imageResId = R.drawable.day27,
-                audioResId = R.raw.listenmed27,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed27,
                 isConsecration = false
             ),
             MeditationDto(
@@ -228,7 +228,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 28",
                 meditationDay = "¿QUÉ GRACIA ESPECIAL ESPERAS OBTENER EN ESTA VISITA?",
                 imageResId = R.drawable.day28,
-                audioResId = R.raw.listenmed28,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed28,
                 isConsecration = false
             ),
             MeditationDto(
@@ -236,7 +236,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 29",
                 meditationDay = "MI CARPINTERÍA ESTÁ ABIERTA LAS 24 HORAS DEL DIA",
                 imageResId = R.drawable.day29,
-                audioResId = R.raw.listenmed29,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed29,
                 isConsecration = false
             ),
             MeditationDto(
@@ -244,7 +244,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Dia 30",
                 meditationDay = "EN ESTA TREINTENA EL SOL SE MANTENDRÁ SOBRE TI",
                 imageResId = R.drawable.day30,
-                audioResId = R.raw.listenmed30,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed30,
                 isConsecration = false
             ),
             MeditationDto(
@@ -252,7 +252,7 @@ class MeditationLocalDataSource @Inject constructor() {
                 day = "Consagración",
                 meditationDay = "FINALIZADOS LOS 30 DÍAS DE ORACIÓN, CONSÁGRATE A SAN JOSÉ",
                 imageResId = R.drawable.day1,
-                audioResId = R.raw.listenmed1,
+                audioResId = 0, // Ya no se usa - se obtiene desde Firebaselistenmed1,
                 isConsecration = true
             )
         )

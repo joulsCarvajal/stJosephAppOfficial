@@ -6,6 +6,8 @@ import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alphazetakapp.stjosephappofficial.R
+import com.alphazetakapp.stjosephappofficial.data.datasource.remote.FirebaseStorageService
+import com.alphazetakapp.stjosephappofficial.data.model.AudioFileMapping
 import com.alphazetakapp.stjosephappofficial.datastore.StoreEndDay
 import com.alphazetakapp.stjosephappofficial.domain.usecase.GetMeditationsUseCase
 import com.alphazetakapp.stjosephappofficial.domain.usecase.SetDayCompletedUseCase
@@ -24,7 +26,8 @@ class MeditationViewModel @Inject constructor(
     private val storeEndDay: StoreEndDay,
     @ApplicationContext private val context: Context,
     private val getMeditationsUseCase: GetMeditationsUseCase,
-    private val setDayCompletedUseCase: SetDayCompletedUseCase
+    private val setDayCompletedUseCase: SetDayCompletedUseCase,
+    private val firebaseStorageService: FirebaseStorageService
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow<MeditationDetailState>(MeditationDetailState.Loading)
@@ -33,11 +36,19 @@ class MeditationViewModel @Inject constructor(
     private val mediaPlayers = mutableMapOf<AudioType, MediaPlayer?>()
     private val _playbackStates = MutableStateFlow<Map<AudioType, PlaybackState>>(emptyMap())
     val playbackStates: StateFlow<Map<AudioType, PlaybackState>> = _playbackStates.asStateFlow()
+    
+    // Estado para el progreso de descarga de audios
+    private val _downloadStates = MutableStateFlow<Map<AudioType, DownloadState>>(emptyMap())
+    val downloadStates: StateFlow<Map<AudioType, DownloadState>> = _downloadStates.asStateFlow()
+    
+    // Variable para almacenar el día actual
+    private var currentDayNum: Int = 1
 
     fun loadMeditationData(dayNum: Int) {
         viewModelScope.launch {
             try {
                 _uiState.value = MeditationDetailState.Loading
+                currentDayNum = dayNum
                 
                 // Combinamos la carga de meditación con el estado de completado
                 combine(
@@ -47,6 +58,9 @@ class MeditationViewModel @Inject constructor(
                     meditationDetail.copy(isCompleted = isCompleted)
                 }.collect { meditation ->
                     _uiState.value = MeditationDetailState.Success(meditation)
+                    
+                    // Precargar audios para este día
+                    preloadAudiosForDay(dayNum)
                 }
             } catch (e: Exception) {
                 _uiState.value = MeditationDetailState.Error(e.message ?: "Error desconocido")
@@ -72,25 +86,73 @@ class MeditationViewModel @Inject constructor(
         }
     }
 
-    private fun getAudioResource(audioType: AudioType): Int {
-        val currentState = _uiState.value
-        return when (audioType) {
-            AudioType.ROSARY -> R.raw.rosariosanjose
-            AudioType.LITANIES -> R.raw.letanias
-            AudioType.FINAL_PRAY -> R.raw.oracionfinal
-            AudioType.DAILY_MEDITATION -> {
-                if (currentState is MeditationDetailState.Success) {
-                    currentState.meditation.audioResId
-                } else {
-                    R.raw.listenmed1
+    /**
+     * Precarga los audios para un día específico
+     */
+    private suspend fun preloadAudiosForDay(dayNum: Int) {
+        val audioTypes = listOf(
+            AudioType.ROSARY,
+            AudioType.LITANIES,
+            AudioType.FINAL_PRAY,
+            AudioType.DAILY_MEDITATION
+        )
+        
+        audioTypes.forEach { audioType ->
+            updateDownloadState(audioType) { DownloadState.Downloading }
+            try {
+                val fileName = AudioFileMapping.getFileName(audioType, dayNum)
+                val audioPath = firebaseStorageService.getAudioUrl(fileName)
+                updateDownloadState(audioType) { DownloadState.Downloaded(audioPath) }
+            } catch (e: Exception) {
+                updateDownloadState(audioType) { DownloadState.Error(e.message ?: "Error desconocido") }
+            }
+        }
+    }
+    
+    /**
+     * Obtiene la ruta del audio (local o descargado)
+     */
+    private suspend fun getAudioPath(audioType: AudioType): String? {
+        val downloadState = _downloadStates.value[audioType]
+        return when (downloadState) {
+            is DownloadState.Downloaded -> downloadState.filePath
+            is DownloadState.Downloading -> {
+                // Esperar a que termine la descarga
+                val fileName = AudioFileMapping.getFileName(audioType, currentDayNum)
+                try {
+                    firebaseStorageService.getAudioUrl(fileName)
+                } catch (e: Exception) {
+                    null
+                }
+            }
+            is DownloadState.Error -> null
+            null -> {
+                // Iniciar descarga si no está en ningún estado
+                val fileName = AudioFileMapping.getFileName(audioType, currentDayNum)
+                try {
+                    firebaseStorageService.getAudioUrl(fileName)
+                } catch (e: Exception) {
+                    null
                 }
             }
         }
     }
 
-    private fun initializeMediaPlayer(audioType: AudioType) {
+    private suspend fun initializeMediaPlayer(audioType: AudioType) {
         if (mediaPlayers[audioType] == null) {
-            mediaPlayers[audioType] = MediaPlayer.create(context, getAudioResource(audioType))
+            val audioPath = getAudioPath(audioType)
+            if (audioPath != null) {
+                try {
+                    val mediaPlayer = MediaPlayer()
+                    mediaPlayer.setDataSource(audioPath)
+                    mediaPlayer.prepare()
+                    mediaPlayers[audioType] = mediaPlayer
+                } catch (e: Exception) {
+                    _uiState.value = MeditationDetailState.Error("Error inicializando reproductor: ${e.message}")
+                }
+            } else {
+                _uiState.value = MeditationDetailState.Error("No se pudo obtener el audio")
+            }
         }
     }
 
@@ -208,6 +270,12 @@ class MeditationViewModel @Inject constructor(
             put(audioType, update(get(audioType) ?: PlaybackState()))
         }
     }
+    
+    private fun updateDownloadState(audioType: AudioType, update: (DownloadState?) -> DownloadState) {
+        _downloadStates.value = _downloadStates.value.toMutableMap().apply {
+            put(audioType, update(get(audioType)))
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -247,3 +315,9 @@ data class PlaybackState(
     val isPlaying: Boolean = false,
     val speed: Float = 1.0f
 )
+
+sealed class DownloadState {
+    data object Downloading : DownloadState()
+    data class Downloaded(val filePath: String) : DownloadState()
+    data class Error(val message: String) : DownloadState()
+}
