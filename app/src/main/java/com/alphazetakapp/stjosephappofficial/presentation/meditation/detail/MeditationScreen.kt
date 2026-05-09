@@ -27,8 +27,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -287,46 +289,61 @@ fun CompletionSwitch(
     dayNum: Int,
     onToggle: (Boolean) -> Unit
 ) {
-    val backgroundColor = if (isCompleted) Color(0xFFF2A71B) else Color.Transparent
+    val completedGreen = Color(0xFF4CAF50)
+    val cardBg = if (isCompleted)
+        completedGreen.copy(alpha = 0.12f)
+    else
+        MaterialTheme.colorScheme.surface
 
-    Box(
+    val borderColor = if (isCompleted) completedGreen else MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
+
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(backgroundColor)
-            .verticalScroll(rememberScrollState())
+            .clickable { onToggle(!isCompleted) },
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = cardBg),
+        border = BorderStroke(1.5.dp, borderColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Switch(
-                checked = isCompleted,
-                onCheckedChange = { isChecked ->
-                    onToggle(isChecked)
-                },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
-                    checkedTrackColor = Color(0xFF4CAF50),
-                    uncheckedThumbColor = Color.White,
-                    uncheckedTrackColor = Color.Gray
-                ),
-                modifier = Modifier.padding(16.dp)
+            Icon(
+                imageVector = if (isCompleted) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircle,
+                contentDescription = null,
+                tint = if (isCompleted) completedGreen else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+                modifier = Modifier.size(32.dp)
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = if (isCompleted) "Día $dayNum completado" else "Marcar día $dayNum como completado",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                    color = if (isCompleted) completedGreen else MaterialTheme.colorScheme.onSurface
+                )
+                if (!isCompleted) {
+                    Text(
+                        text = "Toca para registrar tu progreso",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                    )
+                }
+            }
 
-            Text(
-                text = if (isCompleted)
-                    "DIA $dayNum, TERMINADO!!!"
-                else
-                    "MARCA EL DIA $dayNum COMO TERMINADO",
-                color = Color.White,
-                fontStyle = FontStyle.Italic,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Center
+            Switch(
+                checked = isCompleted,
+                onCheckedChange = { onToggle(it) },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = completedGreen,
+                    uncheckedThumbColor = Color.White,
+                    uncheckedTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                )
             )
         }
     }
@@ -352,7 +369,7 @@ fun MeditationTitle(dayNum: Int) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colorResource(id = R.color.backgroundColorApp)),
+                    .background(colorResource(id = R.color.colorPrimary)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {

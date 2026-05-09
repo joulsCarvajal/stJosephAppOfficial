@@ -77,7 +77,7 @@ fun WelcomeScreen(
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         ),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.fillMaxWidth()
                     )
 
@@ -101,7 +101,7 @@ fun WelcomeScreen(
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     lineHeight = 24.sp
                                 ),
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 modifier = Modifier
                                     .verticalScroll(rememberScrollState())
                                     .padding(bottom = 16.dp)
@@ -116,8 +116,8 @@ fun WelcomeScreen(
                             .fillMaxWidth()
                             .height(56.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFF2A71B),
-                            contentColor = Color.Black
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onSecondary
                         ),
                         shape = RoundedCornerShape(28.dp)
                     ) {
@@ -167,7 +167,7 @@ fun WelcomeScreen(
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center
                             ),
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                         
                         Spacer(modifier = Modifier.height(32.dp))
@@ -208,7 +208,7 @@ fun WelcomeScreen(
                                     style = MaterialTheme.typography.bodyLarge.copy(
                                         lineHeight = 28.sp
                                     ),
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     modifier = Modifier.verticalScroll(rememberScrollState())
                                 )
                             }
@@ -220,8 +220,8 @@ fun WelcomeScreen(
                                 .fillMaxWidth()
                                 .height(64.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFF2A71B),
-                                contentColor = Color.Black
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onSecondary
                             ),
                             shape = RoundedCornerShape(32.dp)
                         ) {
