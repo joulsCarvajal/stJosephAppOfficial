@@ -26,6 +26,7 @@ import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -74,7 +75,7 @@ fun DaysScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFFC2932A))
+                    .background(MaterialTheme.colorScheme.background)
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -161,7 +162,7 @@ fun DaysScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFFC2932A))
+                    .background(MaterialTheme.colorScheme.background)
                     .padding(24.dp)
             ) {
                 Button(
@@ -273,6 +274,7 @@ private fun MeditationDayCard(
     } else {
         colorResource(id = R.color.cardBackground)
     }
+    val availableIconTint = MaterialTheme.colorScheme.onSurface
 
     val iconState = when {
         meditation.isConsecration && meditation.isCompleted -> IconState(
@@ -283,7 +285,7 @@ private fun MeditationDayCard(
 
         meditation.isConsecration -> IconState(
             vector = Icons.Outlined.CheckCircle,  // Cambiamos de Lock a RadioButtonUnchecked para la consagración
-            tint = Color.White,
+            tint = availableIconTint,
             description = "Consagración disponible"
         )
 
@@ -301,7 +303,7 @@ private fun MeditationDayCard(
 
         else -> IconState(
             vector = Icons.Outlined.CheckCircle,
-            tint = Color.White,
+            tint = availableIconTint,
             description = "Día disponible"
         )
     }
@@ -310,7 +312,7 @@ private fun MeditationDayCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        border = BorderStroke(2.dp, Color.Gray),
+        border = BorderStroke(2.dp, colorResource(id = R.color.cardBorder)),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) Color.Gray else backColor
         )
@@ -341,14 +343,14 @@ private fun MeditationDayCard(
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Cursive,
                     textAlign = TextAlign.Center,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(
                     text = meditation.meditationDay,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(end = 8.dp)
                 )
             }

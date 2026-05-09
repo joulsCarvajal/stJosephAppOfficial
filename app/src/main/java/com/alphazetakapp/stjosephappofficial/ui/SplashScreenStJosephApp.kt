@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -74,7 +75,7 @@ fun SplashScreenStJosephApp(){
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFF8B4513))
+            .background(color = MaterialTheme.colorScheme.primary)
     ){
         Column(
             modifier = Modifier
