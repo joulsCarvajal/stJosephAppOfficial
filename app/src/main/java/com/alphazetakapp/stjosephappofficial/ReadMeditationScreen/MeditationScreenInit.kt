@@ -30,6 +30,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -135,7 +136,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
         })
     }
     // Define el color de fondo de toda la pantalla
-    val backgroundColor = if (isSwitchOn) Color(0xFFF2A71B) else Color.Transparent
+    val backgroundColor = if (isSwitchOn) MaterialTheme.colorScheme.secondary else Color.Transparent
 
     Column(
         modifier = Modifier
@@ -164,7 +165,7 @@ fun MeditationScreen(dayNum: Int, day: String, dailyRecord: Int, context: Contex
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(contrastColor),
+                        .background(colorResource(id = R.color.colorPrimary)),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {

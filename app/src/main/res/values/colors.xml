@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#F2A71B</color>
-    <color name="purple_500">#4C2709</color>
-    <color name="purple_700">#4C2709</color>
-    <color name="teal_200">#F2A71B</color>
-    <color name="teal_700">#F2A71B</color>
+    <!-- Warm Parchment palette — light theme -->
+    <color name="colorPrimary">#7B3F1E</color>
+    <color name="colorPrimaryVariant">#5C2E12</color>
+    <color name="colorSecondary">#C8922A</color>
+    <color name="colorSecondaryVariant">#A87820</color>
+    <color name="colorBackground">#FDF6EC</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnSecondary">#2C1A0E</color>
+    <color name="colorOnBackground">#2C1A0E</color>
+    <color name="colorOnSurface">#2C1A0E</color>
+    <color name="cardBackground">#FFFFFF</color>
+    <color name="cardBorder">#E8D5B0</color>
+    <color name="buttonPrimary">#C8922A</color>
+    <color name="buttonText">#2C1A0E</color>
+    <color name="textPrimary">#2C1A0E</color>
+    <color name="textSecondary">#6B4226</color>
+
+    <!-- Legacy aliases used in code via colorResource() -->
+    <color name="backgroundColorApp">@color/colorBackground</color>
+    <color name="textColorPrimary">@color/textPrimary</color>
+    <color name="textColorSecondary">@color/textSecondary</color>
+
+    <!-- Drawable tint references -->
+    <color name="purple_700">@color/colorPrimary</color>
+    <color name="purple_200">@color/colorSecondary</color>
+
+    <!-- Utility -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="backgroundColorApp">#8B4513</color>
-    <color name="cardBackground">#A0522D</color>
-    <color name="textColorPrimary">#FFFFFF</color>   // Blanco para texto principal
-    <color name="textColorSecondary">#FFF9F1</color> // Gris claro para texto secundario
 </resources>
