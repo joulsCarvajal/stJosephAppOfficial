@@ -1,0 +1,259 @@
+name: CI/CD Pipeline - Devocionario San José
+
+on:
+  push:
+    branches: [ main, develop, release/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # Job para builds de desarrollo
+  build-dev:
+    if: github.ref == 'refs/heads/develop' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    outputs:
+      apk-path: ${{ steps.build.outputs.apk-path }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+      
+    - name: Build Debug APK
+      id: build
+      run: |
+        ./gradlew assembleDevDebug
+        echo "apk-path=app/build/outputs/apk/dev/debug/app-dev-debug.apk" >> $GITHUB_OUTPUT
+        
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: dev-apk
+        path: ${{ steps.build.outputs.apk-path }}
+        
+    - name: Upload to Firebase App Distribution (Dev)
+      if: github.ref == 'refs/heads/develop'
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      with:
+        appId: ${{ secrets.FIREBASE_APP_ID_DEV }}
+        token: ${{ secrets.FIREBASE_TOKEN }}
+        groups: dev-testers
+        file: ${{ steps.build.outputs.apk-path }}
+        releaseNotes: |
+          🚀 Build de Desarrollo
+          📱 Devocionario San José - Dev Build
+          🔄 Commit: ${{ github.sha }}
+          👤 Autor: ${{ github.actor }}
+
+  # Job para builds de QA
+  build-qa:
+    if: startsWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-latest
+    outputs:
+      aab-path: ${{ steps.build.outputs.aab-path }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+    - name: Setup Keystore
+      run: |
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+        
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+      
+    - name: Build Release AAB
+      id: build
+      run: |
+        ./gradlew bundleDevRelease \
+          -Pandroid.injected.signing.store.file=keystore.jks \
+          -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
+          -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+          -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+        echo "aab-path=app/build/outputs/bundle/devRelease/app-dev-release.aab" >> $GITHUB_OUTPUT
+        
+    - name: Upload AAB artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: qa-aab
+        path: ${{ steps.build.outputs.aab-path }}
+        
+    - name: Upload to Firebase App Distribution (QA)
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      with:
+        appId: ${{ secrets.FIREBASE_APP_ID_DEV }}
+        token: ${{ secrets.FIREBASE_TOKEN }}
+        groups: qa-testers
+        file: ${{ steps.build.outputs.aab-path }}
+        releaseNotes: |
+          🧪 Build de QA
+          📱 Devocionario San José - QA Build
+          🔄 Commit: ${{ github.sha }}
+          👤 Autor: ${{ github.actor }}
+          📋 Rama: ${{ github.ref_name }}
+
+  # Job para builds de Producción
+  build-prod:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: build-qa
+    outputs:
+      aab-path: ${{ steps.build.outputs.aab-path }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+    - name: Setup Keystore
+      run: |
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+        
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+      
+    - name: Build Production AAB
+      id: build
+      run: |
+        ./gradlew bundleProdRelease \
+          -Pandroid.injected.signing.store.file=keystore.jks \
+          -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
+          -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+          -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+        echo "aab-path=app/build/outputs/bundle/prodRelease/app-prod-release.aab" >> $GITHUB_OUTPUT
+        
+    - name: Upload AAB artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: prod-aab
+        path: ${{ steps.build.outputs.aab-path }}
+        
+    - name: Upload to Firebase App Distribution (Production)
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      with:
+        appId: ${{ secrets.FIREBASE_APP_ID_PROD }}
+        token: ${{ secrets.FIREBASE_TOKEN }}
+        groups: production-testers
+        file: ${{ steps.build.outputs.aab-path }}
+        releaseNotes: |
+          🚀 Build de Producción
+          📱 Devocionario San José - Production Build
+          🔄 Commit: ${{ github.sha }}
+          👤 Autor: ${{ github.actor }}
+          📋 Versión: ${{ github.ref_name }}
+          
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ github.run_number }}
+        name: Release v${{ github.run_number }}
+        body: |
+          🎉 Nueva versión de Devocionario San José
+          
+          **Cambios en esta versión:**
+          - Ver detalles en el commit: ${{ github.sha }}
+          
+          **Archivos de descarga:**
+          - AAB de producción disponible en Firebase App Distribution
+        draft: false
+        prerelease: false
+
+  # Job para análisis de código
+  code-analysis:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+      
+    - name: Run Lint
+      run: ./gradlew lintDevDebug
+      
+    - name: Upload Lint Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: lint-results
+        path: app/build/reports/lint-results-*.html
